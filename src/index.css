@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-primary font-sans antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-2.5 rounded-xl font-medium transition-all hover:opacity-90 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-border text-primary px-6 py-2.5 rounded-xl font-medium transition-all hover:bg-opacity-80 active:scale-95;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-premium;
+  }
+
+  .filter-section-title {
+    @apply text-xs font-bold uppercase tracking-wider text-secondary mb-4;
+  }
+}
