@@ -225,7 +225,7 @@ function CarDetailPage() {
           </div>
 
           {/* Pricing & CTA (Right) */}
-          {/* <div className="space-y-6">
+          <div className="space-y-6 ">
             <div className="sticky top-28 space-y-6">
               <div className="bg-white rounded-[2.5rem] p-10 shadow-premium border border-gray-100">
                 <div className="mb-10">
@@ -234,10 +234,10 @@ function CarDetailPage() {
                   </span>
                   <div className="flex items-baseline gap-2">
                     <h2 className="text-5xl font-black tracking-tighter">
-                      ${car.price.toLocaleString()}
+                      Rp{car.price.toLocaleString()}
                     </h2>
                     <span className="text-xs text-secondary font-bold uppercase tracking-widest">
-                      USD
+                      IDR
                     </span>
                   </div>
                   <p className="text-[10px] text-green-600 font-bold mt-4 flex items-center gap-2 uppercase tracking-widest">
@@ -253,12 +253,12 @@ function CarDetailPage() {
                   >
                     Start Booking
                   </Link>
-                  <button className="w-full py-5 bg-white text-black border-2 border-gray-100 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-gray-50 transition-all">
+                  {/* <button className="w-full py-5 bg-white text-black border-2 border-gray-100 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-gray-50 transition-all">
                     Inquire via Chat
-                  </button>
+                  </button> */}
                 </div>
 
-                <div className="mt-10 pt-10 border-t border-gray-100 flex items-center justify-between">
+                {/* <div className="mt-10 pt-10 border-t border-gray-100 flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-2xl bg-gray-100 border border-gray-100 overflow-hidden shadow-sm">
                       <img
@@ -278,8 +278,8 @@ function CarDetailPage() {
                   <button className="p-3 bg-gray-50 rounded-xl text-black hover:bg-black hover:text-white transition-all">
                     <Zap className="w-4 h-4 fill-current" />
                   </button>
-                </div>
-              </div> */}
+                </div> */}
+              </div>
 
               {/* Delivery Info */}
               {/* <div className="bg-black rounded-[2.5rem] p-10 text-white shadow-2xl shadow-black/20 relative overflow-hidden group">
