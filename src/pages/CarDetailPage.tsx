@@ -225,7 +225,7 @@ function CarDetailPage() {
           </div>
 
           {/* Pricing & CTA (Right) */}
-          <div className="space-y-6">
+          {/* <div className="space-y-6">
             <div className="sticky top-28 space-y-6">
               <div className="bg-white rounded-[2.5rem] p-10 shadow-premium border border-gray-100">
                 <div className="mb-10">
@@ -279,10 +279,10 @@ function CarDetailPage() {
                     <Zap className="w-4 h-4 fill-current" />
                   </button>
                 </div>
-              </div>
+              </div> */}
 
               {/* Delivery Info */}
-              <div className="bg-black rounded-[2.5rem] p-10 text-white shadow-2xl shadow-black/20 relative overflow-hidden group">
+              {/* <div className="bg-black rounded-[2.5rem] p-10 text-white shadow-2xl shadow-black/20 relative overflow-hidden group">
                 <div className="relative z-10">
                   <h3 className="font-black uppercase tracking-[0.2em] flex items-center gap-2 mb-4 text-xs">
                     <Zap className="w-4 h-4 text-blue-400 fill-current" />
@@ -297,7 +297,7 @@ function CarDetailPage() {
                   </div>
                 </div>
                 <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-blue-600/20 rounded-full blur-[80px] group-hover:bg-blue-600/30 transition-all duration-700" />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
