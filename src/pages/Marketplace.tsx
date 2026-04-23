@@ -1,8 +1,7 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import FilterSidebar, { type Filters } from "../components/FilterSidebar";
 import CarCard from "../components/CarCard";
-import FeaturedCard from "../components/FeaturedCard";
 import { supabase } from "../supabase";
 import { ChevronLeft, ChevronRight, Loader2, XCircle } from "lucide-react";
 import type { Car } from "../types";
@@ -70,15 +69,15 @@ function Marketplace() {
     fetchCars();
   }, [filters]);
 
-  const featuredCar = useMemo(
-    () => cars.find((car) => car.isEditorsChoice) || cars[0],
-    [cars],
-  );
+  // const featuredCar = useMemo(
+  //   () => cars.find((car) => car.isEditorsChoice) || cars[0],
+  //   [cars],
+  // );
 
-  const regularCars = useMemo(
-    () => cars.filter((car) => car.id !== featuredCar?.id),
-    [cars, featuredCar],
-  );
+  // const regularCars = useMemo(
+  //   () => cars.filter((car) => car.id !== featuredCar?.id),
+  //   [cars, featuredCar],
+  // );
 
   const resetFilters = () => {
     setFilters({
@@ -152,20 +151,13 @@ function Marketplace() {
                 <>
                   {/* First Row of Cars */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {regularCars.slice(0, 3).map((car) => (
+                    {cars.slice(0, 3).map((car) => (
                       <CarCard key={car.id} car={car} />
                     ))}
                   </div>
 
                   {/* Featured Section */}
-                  {featuredCar && <FeaturedCard car={featuredCar} />}
-
-                  {/* Second Row of Cars */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {regularCars.slice(3).map((car) => (
-                      <CarCard key={car.id} car={car} />
-                    ))}
-                  </div>
+                  {/* {featuredCar && <FeaturedCard car={featuredCar} />} */}
 
                   {/* Pagination */}
                   <div className="flex items-center justify-center gap-2 pt-8 pb-12">

@@ -153,7 +153,7 @@ function SellRequestsPage() {
                   <div className="flex items-center gap-2 mt-2">
                     <DollarSign className="w-3.5 h-3.5 text-secondary" />
                     <span className="text-sm font-black text-black">
-                      ${req.asking_price.toLocaleString()}
+                      Rp{req.asking_price.toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -188,15 +188,15 @@ function SellRequestsPage() {
 
                     {/* Progress Bar Visual */}
                     {req.status !== "rejected" && (
-                      <div className="relative pt-8 pb-4">
-                        <div className="h-1 bg-gray-100 rounded-full w-full absolute top-1/2 -translate-y-1/2" />
+                      <div className="relative pt-8 pb-4 ">
+                        <div className="h-1 bg-gray-100 rounded-full w-full absolute top-1/2 -translate-y-1/2 hidden" />
                         <div
-                          className="h-1 bg-black rounded-full absolute top-1/2 -translate-y-1/2 transition-all duration-1000"
+                          className="h-1 bg-black rounded-full absolute top-1/2 -translate-y-1/2 transition-all duration-1000 "
                           style={{
                             width: `${Math.min(100, (getStatusStep(req.status) / 5) * 100)}%`,
                           }}
                         />
-                        <div className="relative flex justify-between">
+                        <div className="relative flex justify-between mt-2">
                           {[
                             "Offer",
                             "Review",
@@ -234,9 +234,9 @@ function SellRequestsPage() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row items-center gap-4 mt-8 pt-8 border-t border-gray-50">
-                    <button className="w-full sm:w-auto px-6 py-3 border border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-gray-50 transition-all">
+                    {/* <button className="w-full sm:w-auto px-6 py-3 border border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-gray-50 transition-all">
                       <HelpCircle className="w-3.5 h-3.5" /> Support Console
-                    </button>
+                    </button> */}
                     {req.status === "completed" && (
                       <button className="w-full sm:w-auto px-6 py-3 bg-black text-white rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-lg">
                         <Download className="w-3.5 h-3.5" /> Download Digital
