@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { supabase } from "../supabase";
 import AdminSidebar from "../components/AdminSidebar";
 import {
-  Users,
-  Shield,
   Search,
   MoreVertical,
   UserPlus,
@@ -149,17 +147,11 @@ function AdminRBACPage() {
         <header className="p-8 pb-0 flex items-center justify-between">
           <div>
             <h2 className="text-3xl font-black tracking-tight mb-2">
-              Role-Based Access Control
+              Kontrol Akses Berbasis Peran
             </h2>
             <p className="text-secondary text-sm font-medium">
-              Manage internal permissions and client access levels across the
-              platform.
+              Kelola izin internal dan tingkat akses klien di seluruh platform.
             </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <button className="px-6 py-3 bg-black text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] transition-transform shadow-lg flex items-center gap-2">
-              <UserPlus className="w-4 h-4" /> Invite Member
-            </button>
           </div>
         </header>
 
@@ -170,7 +162,7 @@ function AdminRBACPage() {
                 <Search className="absolute left-8 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary/40" />
                 <input
                   type="text"
-                  placeholder="Search by name or email address..."
+                  placeholder="Cari berdasarkan nama atau alamat email..."
                   className="w-full pl-12 pr-6 py-4 bg-gray-50/50 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-black outline-none transition-all"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -181,7 +173,7 @@ function AdminRBACPage() {
                 <table className="w-full text-left">
                   <thead>
                     <tr className="text-[10px] font-black uppercase tracking-widest text-secondary/40">
-                      <th className="px-8 py-4">User</th>
+                      <th className="px-8 py-4">Pengguna</th>
                       <th className="px-8 py-4">Role / Permissions</th>
                       <th className="px-8 py-4">Status</th>
                       <th className="px-8 py-4">Joined</th>

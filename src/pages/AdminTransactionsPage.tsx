@@ -91,7 +91,7 @@ function AdminTransactionsPage() {
       .eq("id", selectedTxn.id);
 
     if (error) {
-      alert("Failed to update status");
+      alert("Gagal memperbarui status");
     } else {
       setTransactions((txns) =>
         txns.map((t) =>
@@ -113,20 +113,23 @@ function AdminTransactionsPage() {
   const getStatusDisplay = (status: string) => {
     switch (status) {
       case "pending":
-        return { label: "Booking Paid", color: "bg-amber-100 text-amber-700" };
+        return {
+          label: "Booking Dibayar",
+          color: "bg-amber-100 text-amber-700",
+        };
       case "verified":
         return {
-          label: "Booking Verified",
+          label: "Booking Tervalidasi",
           color: "bg-blue-100 text-blue-700",
         };
       case "dp_paid":
         return {
-          label: "DP & KTP Ready",
+          label: "DP & KTP Siap",
           color: "bg-purple-100 text-purple-700",
         };
       case "verified_dp":
         return {
-          label: "DP & ID Verified",
+          label: "DP & ID Tervalidasi",
           color: "bg-green-100 text-green-700",
         };
       case "processing_docs":
@@ -136,12 +139,12 @@ function AdminTransactionsPage() {
         };
       case "full_paid":
         return {
-          label: "Awaiting Delivery",
+          label: "Menunggu Pengiriman",
           color: "bg-emerald-600 text-white",
         };
       case "completed":
         return {
-          label: "Fully Cleared",
+          label: "Selesai Sepenuhnya",
           color: "bg-emerald-100 text-emerald-800",
         };
       default:
@@ -161,20 +164,12 @@ function AdminTransactionsPage() {
         <header className="p-8 pb-0 flex items-center justify-between">
           <div>
             <h2 className="text-3xl font-black tracking-tight mb-2">
-              Transactions
+              Transaksi
             </h2>
             <p className="text-secondary text-sm font-medium">
-              Manage automotive sales and auction clearances.
+              Kelola penjualan mobil dan izin lelang.
             </p>
           </div>
-          {/* <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary" />
-            <input
-              type="text"
-              placeholder="Search transactions..."
-              className="pl-12 pr-6 py-3 bg-white border-none rounded-2xl w-80 text-sm shadow-sm focus:ring-2 focus:ring-black transition-all"
-            />
-          </div> */}
         </header>
 
         <section className="p-8 flex gap-8 items-start flex-1 min-h-0">
@@ -186,25 +181,32 @@ function AdminTransactionsPage() {
             >
               <StatCard
                 icon={CreditCard}
-                label="Total Sales"
-                value="$4,820,000"
+                label="Total Penjualan"
+                value={`Rp. ${transactions
+                  .reduce((acc, txn) => acc + txn.car.price, 0)
+                  .toLocaleString()}`}
                 trend="+12.5%"
                 trendUp
               />
-              <StatCard icon={Gavel} label="Active Auctions" value="142" />
+              <StatCard
+                icon={Gavel}
+                label="Lelang Aktif"
+                value={
+                  transactions.filter((txn) => txn.status != "completed").length
+                }
+              />
               {!selectedTxn && (
                 <>
                   <StatCard
                     icon={Clock}
-                    label="Pending Validations"
-                    value="28"
+                    label="Verifikasi Tertunda"
+                    value={
+                      transactions.filter((txn) => txn.status === "pending")
+                        .length
+                    }
                     Urgent
                   />
-                  <StatCard
-                    icon={TrendingUp}
-                    label="Performance"
-                    value="98.2%"
-                  />
+                  <StatCard icon={TrendingUp} label="Kinerja" value="98.2%" />
                 </>
               )}
             </div>
@@ -212,27 +214,25 @@ function AdminTransactionsPage() {
             {/* Content Table Area */}
             <div className="bg-white rounded-[2.5rem] p-4 shadow-sm border border-gray-100 overflow-hidden transition-all duration-500">
               <div className="p-6 flex items-center justify-between border-b border-gray-50">
-                <h3 className="font-black tracking-tight">
-                  Recent Transactions
-                </h3>
+                <h3 className="font-black tracking-tight">Transaksi Terbaru</h3>
                 <div className="flex bg-gray-100 p-1 rounded-xl">
                   <TabButton
                     active={filter === "all"}
                     onClick={() => setFilter("all")}
                   >
-                    All
+                    Semua
                   </TabButton>
                   <TabButton
                     active={filter === "pending"}
                     onClick={() => setFilter("pending")}
                   >
-                    Processing
+                    Proses
                   </TabButton>
                   <TabButton
                     active={filter === "completed"}
                     onClick={() => setFilter("completed")}
                   >
-                    Completed
+                    Selesai
                   </TabButton>
                 </div>
               </div>
@@ -241,11 +241,11 @@ function AdminTransactionsPage() {
                 <table className="w-full text-left">
                   <thead>
                     <tr className="text-[10px] font-black uppercase tracking-widest text-secondary/40 border-b border-gray-50">
-                      <th className="px-8 py-6">Vehicle</th>
-                      <th className="px-8 py-6">Transaction ID</th>
-                      <th className="px-8 py-6 text-right">Amount</th>
+                      <th className="px-8 py-6">Kendaraan</th>
+                      <th className="px-8 py-6">ID Transaksi</th>
+                      <th className="px-8 py-6 text-right">Jumlah</th>
                       <th className="px-8 py-6 text-center">Status</th>
-                      <th className="px-8 py-6 text-right">Actions</th>
+                      <th className="px-8 py-6 text-right">Aksi</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
@@ -306,8 +306,8 @@ function AdminTransactionsPage() {
                                   "verified_dp",
                                   "completed",
                                 ].includes(txn.status)
-                                  ? "View"
-                                  : "Validate"}
+                                  ? "Lihat"
+                                  : "Verifikasi"}
                               </button>
                             </td>
                           </tr>
@@ -337,8 +337,8 @@ function AdminTransactionsPage() {
                       {["verified", "verified_dp", "completed"].includes(
                         selectedTxn.status,
                       )
-                        ? "Verification Complete"
-                        : "Required Validation"}
+                        ? "Verifikasi Selesai"
+                        : "Verifikasi Diperlukan"}
                     </h3>
                     <button
                       onClick={() => setSelectedTxn(null)}
@@ -350,23 +350,23 @@ function AdminTransactionsPage() {
 
                   <p className="text-xs text-secondary leading-relaxed font-medium mb-10">
                     {selectedTxn.status === "dp_paid"
-                      ? "High-Priority: Down Payment and Identity Verification required to initiate vehicle transport."
+                      ? "Prioritas Tinggi: Verifikasi DP dan Identitas diperlukan untuk memulai pengiriman kendaraan."
                       : selectedTxn.status === "pending"
-                        ? "Booking Fee Verification: Initial commitment clearance for vehicle reservation."
-                        : "Transaction successfully cleared and moved to fulfillment."}
+                        ? "Verifikasi Biaya Booking: Klarifikasi komitmen awal untuk pemesanan kendaraan."
+                        : "Transaksi berhasil diselesaikan dan dipindahkan ke pemenuhan."}
                   </p>
 
                   {/* Dynamic Preview Section */}
                   {selectedTxn.status === "pending" && (
                     <div className="mb-10">
                       <p className="text-[10px] font-black uppercase tracking-widest text-secondary/40 mb-4">
-                        Booking Fee Receipt
+                        Bukti Pembayaran Booking
                       </p>
                       <div className="aspect-[4/3] bg-gray-100 rounded-3xl overflow-hidden border border-gray-100 shadow-inner group relative cursor-pointer">
                         {selectedTxn.payment_proof_url ? (
                           <img
                             src={selectedTxn.payment_proof_url}
-                            alt="Receipt"
+                            alt="Bukti"
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           />
                         ) : (
@@ -376,7 +376,7 @@ function AdminTransactionsPage() {
                         )}
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                           <button className="px-6 py-2 bg-white text-black rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                            <Eye className="w-3.5 h-3.5" /> View Full Size
+                            <Eye className="w-3.5 h-3.5" /> Lihat Ukuran Penuh
                           </button>
                         </div>
                       </div>
@@ -387,8 +387,8 @@ function AdminTransactionsPage() {
                     <div className="space-y-8 mb-10">
                       <div>
                         <p className="text-[10px] font-black uppercase tracking-widest text-secondary/40 mb-4 flex items-center gap-2">
-                          <CheckCircle2 className="w-3 h-3" /> Identity
-                          Verification (KTP)
+                          <CheckCircle2 className="w-3 h-3" /> Verifikasi
+                          Identitas (KTP)
                         </p>
                         <div className="aspect-video bg-gray-100 rounded-[2rem] overflow-hidden border border-gray-100 shadow-inner group relative cursor-pointer">
                           {selectedTxn.ktp_url ? (
@@ -406,14 +406,13 @@ function AdminTransactionsPage() {
                       </div>
                       <div>
                         <p className="text-[10px] font-black uppercase tracking-widest text-secondary/40 mb-4 flex items-center gap-2">
-                          <CreditCard className="w-3 h-3" /> Down Payment
-                          Receipt
+                          <CreditCard className="w-3 h-3" /> Bukti Pembayaran DP
                         </p>
                         <div className="aspect-video bg-gray-100 rounded-[2rem] overflow-hidden border border-gray-100 shadow-inner group relative cursor-pointer">
                           {selectedTxn.dp_proof_url ? (
                             <img
                               src={selectedTxn.dp_proof_url}
-                              alt="DP Proof"
+                              alt="Bukti DP"
                               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                             />
                           ) : (
@@ -435,18 +434,18 @@ function AdminTransactionsPage() {
                         className="w-full py-5 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:scale-[1.02] active:scale-95 transition-all"
                       >
                         {selectedTxn.status === "verified_dp"
-                          ? "Process STNK & BPKB"
+                          ? "Proses STNK & BPKB"
                           : selectedTxn.status === "dp_paid"
-                            ? "Approve identity & DP"
-                            : "Approve Booking Fee"}
+                            ? "Verifikasi Identitas & DP"
+                            : "Verifikasi Biaya Booking"}
                       </button>
                     ) : (
                       <div className="w-full py-5 bg-green-50 text-green-700 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 border border-green-100">
-                        <CheckCircle2 className="w-4 h-4" /> Stage Active
+                        <CheckCircle2 className="w-4 h-4" /> Tahap Aktif
                       </div>
                     )}
                     <button className="w-full py-4 text-secondary font-black uppercase tracking-widest text-[10px] hover:text-black">
-                      Request Documentation
+                      Minta Dokumentasi
                     </button>
                   </div>
                 </div>
@@ -478,7 +477,7 @@ function StatCard({ icon: Icon, label, value, trend, trendUp, Urgent }: any) {
           )}
           {Urgent && (
             <span className="text-[10px] font-black px-2 py-0.5 bg-red-100 text-red-600 rounded-full animate-pulse">
-              Urgent
+              Mendesak
             </span>
           )}
         </div>

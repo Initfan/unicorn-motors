@@ -83,7 +83,7 @@ function LoginPage() {
 
             <div className="space-y-2">
               <label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-2">
-                Email Address
+                Alamat Email
               </label>
               <div className="relative group">
                 <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-black transition-colors" />
@@ -101,7 +101,7 @@ function LoginPage() {
             <div className="space-y-2">
               <div className="flex justify-between items-center px-2">
                 <label className="text-xs font-black uppercase tracking-widest text-gray-500">
-                  Password
+                  Kata Sandi
                 </label>
                 {/* <button
                   type="button"
@@ -138,9 +138,9 @@ function LoginPage() {
 
           <div className="text-center">
             <p className="text-secondary font-medium">
-              Don't have an account?{" "}
+              Belum punya akun?{" "}
               <Link to="/register" className="text-black font-bold underline">
-                Create for free
+                Daftar gratis
               </Link>
             </p>
           </div>

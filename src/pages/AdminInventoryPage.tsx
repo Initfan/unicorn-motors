@@ -6,15 +6,9 @@ import {
   Search,
   Filter,
   Download,
-  Edit2,
-  Eye,
   ShieldCheck,
   ChevronRight,
-  FileText,
-  Calendar,
-  Settings,
 } from "lucide-react";
-import { motion } from "framer-motion";
 import type { Car } from "../types";
 
 function AdminInventoryPage() {
@@ -64,50 +58,50 @@ function AdminInventoryPage() {
         <header className="flex items-center justify-between mb-10">
           <div>
             <h2 className="text-4xl font-black tracking-tight mb-2">
-              Fleet Inventory
+              Inventaris Armada
             </h2>
             <p className="text-secondary text-sm font-medium">
-              Manage your vehicle assets and document compliance across all
-              regions.
+              Kelola aset kendaraan Anda dan dokumentasi kepatuhan di semua
+              wilayah.
             </p>
           </div>
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             <button className="px-6 py-2.5 bg-white border border-gray-100 rounded-xl font-bold text-[10px] text-secondary uppercase tracking-widest flex items-center gap-2 hover:bg-gray-50 transition-colors">
               <Filter className="w-3.5 h-3.5" /> Filter
             </button>
             <button className="px-6 py-2.5 bg-white border border-gray-100 rounded-xl font-bold text-[10px] text-secondary uppercase tracking-widest flex items-center gap-2 hover:bg-gray-50 transition-colors">
-              <Download className="w-3.5 h-3.5" /> Export CSV
+              <Download className="w-3.5 h-3.5" /> Ekspor CSV
             </button>
-          </div>
+          </div> */}
         </header>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
           <StatCard
             icon={CarIcon}
-            label="Total Fleet"
+            label="Total Armada"
             value={cars.length.toLocaleString()}
             trend="+4.2%"
             trendUp
           />
-          <StatCard
+          {/* <StatCard
             icon={FileText}
-            label="Pending Paperwork"
+            label="Dokumen Tertunda"
             value="84"
             urgent
-            label2="Requires STNK/BPKB verification"
+            label2="Memerlukan verifikasi STNK/BPKB"
           />
           <StatCard
             icon={Settings}
-            label="Under Maintenance"
+            label="Dalam Perawatan"
             value="32"
-            label2="Estimated recovery: 3.2 days"
-          />
+            label2="Perkiraan pemulihan: 3.2 hari"
+          /> */}
           <StatCard
             icon={ShieldCheck}
-            label="Available to Sell"
+            label="Tersedia untuk Dijual"
             value={Math.floor(cars.length * 0.8).toString()}
-            label2="Listed on Global Marketplace"
+            label2="Tercatat di Marketplace Global"
           />
         </div>
 
@@ -118,13 +112,13 @@ function AdminInventoryPage() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary/40" />
               <input
                 type="text"
-                placeholder="Search Vehicle Name, VIN or Model..."
+                placeholder="Cari Nama Kendaraan, VIN atau Model..."
                 className="w-full pl-12 pr-6 py-3 bg-gray-50/50 rounded-2xl text-sm focus:ring-2 focus:ring-black outline-none transition-all font-medium"
               />
             </div>
             <div className="flex items-center gap-6">
               <p className="text-[10px] font-black uppercase tracking-widest text-secondary/40">
-                Showing 1-10 of {cars.length} vehicles
+                Menampilkan 1-10 dari {cars.length} kendaraan
               </p>
               <div className="flex gap-2">
                 <button className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center hover:bg-gray-100 transition-colors">
@@ -142,11 +136,11 @@ function AdminInventoryPage() {
             <table className="w-full text-left">
               <thead>
                 <tr className="text-[10px] font-black uppercase tracking-widest text-secondary/40">
-                  <th className="px-8 py-4">Vehicle Name</th>
-                  <th className="px-8 py-4">VIN Number</th>
-                  <th className="px-8 py-4">Stock Level</th>
-                  <th className="px-8 py-4">Document Status</th>
-                  <th className="px-8 py-4 text-right">Actions</th>
+                  <th className="px-8 py-4">Nama Kendaraan</th>
+                  <th className="px-8 py-4">Nomor VIN</th>
+                  <th className="px-8 py-4">Level Stok</th>
+                  <th className="px-8 py-4">Status Dokumen</th>
+                  {/* <th className="px-8 py-4 text-right">Aksi</th> */}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -196,12 +190,13 @@ function AdminInventoryPage() {
                         <td className="px-8 py-6">
                           <div className="flex items-center gap-4">
                             <span className="text-sm font-black w-4">
-                              {Math.floor(Math.random() * 15)}
+                              {/* {Math.floor(Math.random() * 15)} */}1
                             </span>
                             <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                               <div
                                 className="h-full bg-black rounded-full"
-                                style={{ width: "${Math.random() * 80 + 20}%" }}
+                                // style={{ width: `${Math.random() * 80 + 20}%` }}
+                                style={{ width: `100%` }}
                               />
                             </div>
                           </div>
@@ -212,11 +207,11 @@ function AdminInventoryPage() {
                               STNK Valid
                             </span>
                             <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded-md text-[8px] font-black uppercase tracking-widest flex items-center gap-1 border border-blue-100">
-                              BPKB In-Hand
+                              BPKB Tersedia
                             </span>
                           </div>
                         </td>
-                        <td className="px-8 py-6 text-right">
+                        {/* <td className="px-8 py-6 text-right">
                           <div className="flex items-center justify-end gap-2">
                             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                               <Edit2 className="w-4 h-4 text-secondary/60" />
@@ -225,72 +220,14 @@ function AdminInventoryPage() {
                               <Eye className="w-4 h-4 text-secondary/60" />
                             </button>
                             <button className="px-4 py-2 bg-black text-white rounded-lg text-[9px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all">
-                              Update Docs
+                              Perbarui Dokumen
                             </button>
                           </div>
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
               </tbody>
             </table>
-          </div>
-        </div>
-
-        {/* Expiry Forecast & Document Integrity */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
-          <div className="lg:col-span-2 bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-premium">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h3 className="text-xl font-black tracking-tight mb-1">
-                  Registration Expiry Forecast
-                </h3>
-                <p className="text-xs text-secondary font-medium">
-                  Upcoming STNK renewals for the next 90 days.
-                </p>
-              </div>
-              <button className="text-[10px] font-black uppercase tracking-widest text-black hover:underline underline-offset-4">
-                View Renewal Roadmap
-              </button>
-            </div>
-
-            <div className="space-y-6">
-              <ExpiryItem
-                icon={Calendar}
-                label="14 Vehicles - Expiring in 7 Days"
-                desc="Estimated renewal cost: $2,400.00"
-                color="bg-red-50 text-red-500"
-              />
-              <ExpiryItem
-                icon={Calendar}
-                label="28 Vehicles - Expiring in 30 Days"
-                desc="Processing queued for regional offices."
-                color="bg-amber-50 text-amber-500"
-              />
-            </div>
-          </div>
-
-          <div className="bg-black rounded-[2.5rem] p-10 text-white relative overflow-hidden flex flex-col justify-between">
-            <div className="relative z-10">
-              <h3 className="text-xl font-black tracking-tight mb-4">
-                Document Integrity Check
-              </h3>
-              <p className="text-xs text-gray-400 font-medium leading-relaxed mb-8">
-                Our AI assistant scanned 412 new document uploads this morning.
-              </p>
-              <div className="flex items-center gap-3 mb-10">
-                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                  <ShieldCheck className="w-4 h-4 text-black" />
-                </div>
-                <span className="text-sm font-black tracking-widest uppercase">
-                  98.2% Accuracy Rate
-                </span>
-              </div>
-            </div>
-            <button className="w-full py-4 bg-white text-black rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-[1.02] active:scale-95 transition-all relative z-10">
-              Run Compliance Report
-            </button>
-            {/* Background pattern */}
-            <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-gray-800/20 rounded-full blur-3xl" />
           </div>
         </div>
       </main>
@@ -322,7 +259,7 @@ function StatCard({
         )}
         {urgent && (
           <span className="px-3 py-1 bg-amber-50 text-amber-600 rounded-md text-[8px] font-black uppercase tracking-widest animate-pulse border border-amber-100">
-            12 Urgent
+            12 Mendesak
           </span>
         )}
       </div>

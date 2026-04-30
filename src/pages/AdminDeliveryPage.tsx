@@ -122,11 +122,11 @@ function AdminDeliveryPage() {
         <header className="p-8 pb-0 flex items-center justify-between">
           <div>
             <h2 className="text-3xl font-black tracking-tight mb-2">
-              Delivery Management
+              Manajemen Pengiriman
             </h2>
             <p className="text-secondary text-sm font-medium">
-              Track premium vehicle shipments, manage digital delivery orders
-              (Surat Jalan), and monitor real-time handovers.
+              Lacak pengiriman kendaraan premium, kelola pesanan pengiriman
+              digital (Surat Jalan), dan pantau serah terima secara real-time.
             </p>
           </div>
           {/* <div className="flex items-center gap-3">
@@ -153,7 +153,7 @@ function AdminDeliveryPage() {
                   <div className="flex items-center gap-3 mb-6">
                     <span className="w-2 h-2 bg-amber-500 rounded-full" />
                     <h3 className="text-xs font-black uppercase tracking-widest">
-                      Preparing
+                      Persiapan
                     </h3>
                     <span className="ml-auto text-[10px] font-black bg-gray-100 px-2 py-0.5 rounded-full">
                       {String(preparing.length).padStart(2, "0")}
@@ -180,8 +180,8 @@ function AdminDeliveryPage() {
                         </h4>
                         <p className="text-[10px] text-secondary font-medium mb-4">
                           {order.handover_method === "delivery"
-                            ? "Awaiting dispatch..."
-                            : "Ready for showroom pickup"}
+                            ? "Menunggu pengiriman..."
+                            : "Siap untuk diambil di showroom"}
                         </p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
@@ -207,7 +207,7 @@ function AdminDeliveryPage() {
                       <div className="text-center py-12 text-gray-300">
                         <Package className="w-8 h-8 mx-auto mb-2" />
                         <p className="text-[10px] font-bold uppercase tracking-widest">
-                          No orders
+                          Tidak ada pesanan
                         </p>
                       </div>
                     )}
@@ -219,7 +219,7 @@ function AdminDeliveryPage() {
                   <div className="flex items-center gap-3 mb-6">
                     <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
                     <h3 className="text-xs font-black uppercase tracking-widest">
-                      In Transit
+                      Dalam Perjalanan
                     </h3>
                     <span className="ml-auto text-[10px] font-black bg-gray-100 px-2 py-0.5 rounded-full">
                       {String(inTransit.length).padStart(2, "0")}
@@ -235,7 +235,7 @@ function AdminDeliveryPage() {
                       >
                         <div className="flex items-center justify-between mb-3">
                           <span className="bg-blue-600 text-white px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest">
-                            Live Track
+                            Lacak Langsung
                           </span>
                           <Truck className="w-4 h-4 text-blue-500" />
                         </div>
@@ -243,14 +243,14 @@ function AdminDeliveryPage() {
                           {order.car.make} {order.car.model}
                         </h4>
                         <p className="text-[10px] text-secondary font-medium mb-4">
-                          Heading to {order.address || "buyer location"}
+                          Menuju {order.address || "lokasi pembeli"}
                         </p>
                         <div className="w-full bg-gray-100 rounded-full h-1.5 mb-2">
                           <div className="bg-blue-500 h-1.5 rounded-full w-[67%]" />
                         </div>
                         <div className="flex justify-between text-[10px] font-bold text-secondary">
                           <span>ETA: ~2h</span>
-                          <span>67% Complete</span>
+                          <span>67% Selesai</span>
                         </div>
                       </motion.div>
                     ))}
@@ -258,7 +258,7 @@ function AdminDeliveryPage() {
                       <div className="text-center py-12 text-gray-300">
                         <Truck className="w-8 h-8 mx-auto mb-2" />
                         <p className="text-[10px] font-bold uppercase tracking-widest">
-                          No active shipments
+                          Tidak ada pengiriman aktif
                         </p>
                       </div>
                     )}
@@ -270,7 +270,7 @@ function AdminDeliveryPage() {
                   <div className="flex items-center gap-3 mb-6">
                     <span className="w-2 h-2 bg-green-500 rounded-full" />
                     <h3 className="text-xs font-black uppercase tracking-widest">
-                      Delivered
+                      Selesai
                     </h3>
                     <span className="ml-auto text-[10px] font-black bg-gray-100 px-2 py-0.5 rounded-full">
                       {String(delivered.length).padStart(2, "0")}
@@ -286,14 +286,14 @@ function AdminDeliveryPage() {
                       >
                         <div className="mb-3">
                           <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest">
-                            Completed
+                            Selesai
                           </span>
                         </div>
                         <h4 className="font-black text-sm mb-1">
                           {order.car.make} {order.car.model}
                         </h4>
                         <p className="text-[10px] text-secondary font-medium">
-                          Delivered to {order.full_name}
+                          Diserahkan kepada {order.full_name}
                         </p>
                       </motion.div>
                     ))}
@@ -301,7 +301,7 @@ function AdminDeliveryPage() {
                       <div className="text-center py-12 text-gray-300">
                         <CheckCircle2 className="w-8 h-8 mx-auto mb-2" />
                         <p className="text-[10px] font-bold uppercase tracking-widest">
-                          No deliveries yet
+                          Belum ada pengiriman
                         </p>
                       </div>
                     )}
@@ -315,14 +315,14 @@ function AdminDeliveryPage() {
               <div className="mt-12">
                 <div className="flex items-center justify-between mb-8">
                   <h3 className="text-2xl font-black tracking-tight">
-                    Handover Live Tracking
+                    Lacak Serah Terima Langsung
                   </h3>
                   <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-secondary">
                     <span>
                       TX-ID: {selectedOrder.id.slice(0, 8).toUpperCase()}
                     </span>
                     <button className="text-black hover:underline">
-                      View Logistics Logs
+                      Lihat Logistik
                     </button>
                   </div>
                 </div>
@@ -339,7 +339,7 @@ function AdminDeliveryPage() {
                     <div className="pb-8">
                       <p className="text-[10px] font-black uppercase tracking-widest text-secondary mb-1">
                         {selectedOrder.status !== "request_delivery"
-                          ? "Completed"
+                          ? "Selesai"
                           : "Pending"}{" "}
                         —{" "}
                         {new Date().toLocaleTimeString([], {
@@ -348,11 +348,11 @@ function AdminDeliveryPage() {
                         })}
                       </p>
                       <h4 className="font-black text-sm mb-1">
-                        Carrier Dispatch
+                        Pengiriman Kendaraan
                       </h4>
                       <p className="text-xs text-secondary font-medium">
-                        Vehicle loaded onto enclosed transporter. Primary driver
-                        assigned.
+                        Kendaraan dimuat ke transporter tertutup. Sopir utama
+                        ditugaskan.
                       </p>
                     </div>
                   </div>
@@ -368,15 +368,15 @@ function AdminDeliveryPage() {
                     <div className="pb-8">
                       <p className="text-[10px] font-black uppercase tracking-widest text-secondary mb-1">
                         {selectedOrder.status === "completed"
-                          ? "Completed"
-                          : "In Progress"}
+                          ? "Selesai"
+                          : "Dalam Perjalanan"}
                       </p>
                       <h4 className="font-black text-sm mb-1">
-                        Checkpoint: Safety Inspection
+                        Pemeriksaan Keselamatan
                       </h4>
                       <p className="text-xs text-secondary font-medium">
-                        Routine safety check performed. Vehicle condition
-                        verified.
+                        Pemeriksaan keselamatan rutin dilakukan. Kondisi
+                        kendaraan diverifikasi.
                       </p>
                     </div>
                   </div>
@@ -391,19 +391,19 @@ function AdminDeliveryPage() {
                     <div className="pb-4">
                       <p className="text-[10px] font-black uppercase tracking-widest text-secondary mb-1">
                         {selectedOrder.status === "completed"
-                          ? "Completed"
-                          : "Estimated"}
+                          ? "Selesai"
+                          : "Perkiraan"}
                       </p>
                       <h4 className="font-black text-sm mb-1">
-                        Final Handover & Signature
+                        Serah Terima Akhir & Tanda Tangan
                       </h4>
                       <p className="text-xs text-secondary font-medium">
-                        On-site orientation and digital signature collection
-                        with the client.
+                        Orientasi di lokasi dan pengumpulan tanda tangan digital
+                        dengan klien.
                       </p>
                       {selectedOrder.status !== "completed" && (
                         <div className="mt-4 px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400">
-                          Pending Client Signature
+                          Menunggu Tanda Tangan Klien
                         </div>
                       )}
                     </div>
@@ -428,7 +428,7 @@ function AdminDeliveryPage() {
                     <div className="flex items-center justify-between mb-8">
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-1">
-                          Digital Document
+                          Dokumen Digital
                         </p>
                         <h3 className="text-2xl font-black">Surat Jalan</h3>
                       </div>
@@ -438,7 +438,7 @@ function AdminDeliveryPage() {
                     <div className="space-y-6">
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-1">
-                          Order Number
+                          Nomor Pesanan
                         </p>
                         <p className="font-black text-lg tracking-tight">
                           {orderNumber(selectedOrder.id)}
@@ -446,7 +446,7 @@ function AdminDeliveryPage() {
                       </div>
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-1">
-                          Consignee
+                          Penerima
                         </p>
                         <p className="font-black">{selectedOrder.full_name}</p>
                         <p className="text-xs text-white/60 font-medium">
@@ -455,14 +455,14 @@ function AdminDeliveryPage() {
                       </div>
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-1">
-                          Vehicle Details
+                          Detail Kendaraan
                         </p>
                         <p className="font-black">
                           {selectedOrder.car.year} {selectedOrder.car.make}{" "}
                           {selectedOrder.car.model}
                         </p>
                         <p className="text-xs text-white/60 font-medium">
-                          Chassis: WP0ZZZ99ZLS12***
+                          Chassis: 200
                         </p>
                       </div>
                     </div>
@@ -496,14 +496,14 @@ function AdminDeliveryPage() {
                   <div className="p-6">
                     <div className="flex items-center gap-3">
                       <span className="w-2 h-2 bg-red-500 rounded-full" />
-                      <p className="text-sm font-bold">Live Fleet Position</p>
+                      <p className="text-sm font-bold">Posisi Armada</p>
                     </div>
                     <p className="text-xs text-white/60 font-medium mt-1">
                       {selectedOrder.status === "delivering"
-                        ? "Delivering • Active tracking"
+                        ? "Dalam Perjalanan • Pelacakan Aktif"
                         : selectedOrder.status === "completed"
-                          ? "Delivered successfully"
-                          : "Awaiting dispatch"}
+                          ? "Berhasil Dikirim"
+                          : "Menunggu Pengiriman"}
                     </p>
                   </div>
                 </div>
@@ -515,8 +515,8 @@ function AdminDeliveryPage() {
                       onClick={() => handleDispatch(selectedOrder)}
                       className="w-full py-5 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
                     >
-                      <Truck className="w-4 h-4" /> Dispatch Vehicle & Generate
-                      Surat Jalan
+                      <Truck className="w-4 h-4" /> Kirim Kendaraan & Buat Surat
+                      Jalan
                     </button>
                   )}
                   {selectedOrder.status === "delivering" && (
@@ -524,8 +524,8 @@ function AdminDeliveryPage() {
                       onClick={() => handleCompleteHandover(selectedOrder)}
                       className="w-full py-5 bg-green-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
                     >
-                      <CheckCircle2 className="w-4 h-4" /> Confirm Handover
-                      Complete
+                      <CheckCircle2 className="w-4 h-4" /> Konfirmasi Serah
+                      Terima Selesai
                     </button>
                   )}
                   {selectedOrder.status === "ready_for_pickup" && (
@@ -533,13 +533,13 @@ function AdminDeliveryPage() {
                       onClick={() => handleCompleteHandover(selectedOrder)}
                       className="w-full py-5 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
                     >
-                      <CheckCircle2 className="w-4 h-4" /> Confirm Pickup
-                      Complete
+                      <CheckCircle2 className="w-4 h-4" /> Konfirmasi
+                      Pengambilan Selesai
                     </button>
                   )}
                   {selectedOrder.status === "completed" && (
                     <div className="w-full py-5 bg-green-50 text-green-700 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 border border-green-100">
-                      <CheckCircle2 className="w-4 h-4" /> Handover Completed
+                      <CheckCircle2 className="w-4 h-4" /> Serah Terima Selesai
                     </div>
                   )}
                 </div>

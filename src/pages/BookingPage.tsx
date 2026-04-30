@@ -136,7 +136,7 @@ function BookingPage() {
       <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
         <Loader2 className="w-12 h-12 animate-spin text-black" />
         <p className="font-bold text-secondary uppercase tracking-widest text-xs">
-          Preparing Checkout...
+          Memeriksa...
         </p>
       </div>
     );
@@ -171,9 +171,9 @@ function BookingPage() {
     setCurrentStep((prev) => Math.max(prev - 1, 1) as Step);
 
   const steps = [
-    { title: "Verification", icon: User },
-    { title: "Payment", icon: CreditCard },
-    { title: "Confirmation", icon: CheckCircle2 },
+    { title: "Verifikasi", icon: User },
+    { title: "Pembayaran", icon: CreditCard },
+    { title: "Konfirmasi", icon: CheckCircle2 },
   ];
 
   const bookingFee = 500000; // Rp 500.000
@@ -189,29 +189,13 @@ function BookingPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <h1 className="text-4xl lg:text-5xl font-black tracking-tight mb-4">
-              Finalize Your Acquisition
+              Selesaikan Akuisisi Anda
             </h1>
             <p className="text-secondary max-w-xl">
-              Complete the secure payment process to lock in your inventory
-              selection. This transaction is protected by Unicorn Escrow.
+              Selesaikan proses pembayaran yang aman untuk mengunci pilihan
+              inventaris Anda. Transaksi ini dilindungi oleh Motora Escrow.
             </p>
           </div>
-
-          {/* Countdown Mockup */}
-          {/* <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 self-start md:self-auto">
-            <div className="text-[10px] font-black uppercase tracking-widest text-red-500 leading-none">
-              Booking Window
-            </div>
-            <div className="flex items-center gap-1 font-mono text-xl font-bold">
-              <span className="bg-red-50 text-red-600 px-2 py-1 rounded-lg">
-                14
-              </span>
-              <span>:</span>
-              <span className="bg-red-50 text-red-600 px-2 py-1 rounded-lg">
-                59
-              </span>
-            </div>
-          </div> */}
         </div>
 
         {/* Stepper */}
@@ -261,11 +245,9 @@ function BookingPage() {
                         <User className="w-6 h-6" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold">
-                          Verification Details
-                        </h3>
+                        <h3 className="text-xl font-bold">Detail Verifikasi</h3>
                         <p className="text-sm text-secondary">
-                          Please provide your legal documents information.
+                          Mohon berikan informasi dokumen legal Anda.
                         </p>
                       </div>
                     </div>
@@ -274,7 +256,7 @@ function BookingPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <label className="text-sm font-bold text-gray-700">
-                            Full Name
+                            Nama Lengkap
                           </label>
                           <input
                             type="text"
@@ -291,7 +273,7 @@ function BookingPage() {
                         </div>
                         <div className="space-y-2">
                           <label className="text-sm font-bold text-gray-700">
-                            Phone Number
+                            Nomor Telepon
                           </label>
                           <input
                             type="tel"
@@ -309,11 +291,11 @@ function BookingPage() {
                       </div>
                       <div className="space-y-2">
                         <label className="text-sm font-bold text-gray-700">
-                          Residential Address
+                          Alamat Perumahan
                         </label>
                         <textarea
                           className="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all h-32"
-                          placeholder="Your complete address for documentation..."
+                          placeholder="Alamat lengkap Anda untuk dokumentasi..."
                           value={formData.address}
                           onChange={(e) =>
                             setFormData({
@@ -333,7 +315,7 @@ function BookingPage() {
                     }
                     className="w-full py-5 bg-black text-white rounded-2xl font-bold text-lg shadow-xl hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50 disabled:scale-100"
                   >
-                    Proceed to Payment
+                    Lanjutkan ke Pembayaran
                   </button>
                 </motion.div>
               )}
@@ -352,9 +334,9 @@ function BookingPage() {
                         <Upload className="w-6 h-6" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold">Payment Proof</h3>
+                        <h3 className="text-xl font-bold">Bukti Pembayaran</h3>
                         <p className="text-sm text-secondary">
-                          Upload your bank transfer receipt for verification.
+                          Upload bukti transfer bank Anda untuk verifikasi.
                         </p>
                       </div>
                     </div>
@@ -397,7 +379,7 @@ function BookingPage() {
                         </div>
                         <div>
                           <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest">
-                            Bank Virtual Account
+                            Nomor Rekening Bank
                           </p>
                           <p className="font-bold">8832 1009 2234 11</p>
                         </div>
@@ -408,9 +390,9 @@ function BookingPage() {
                         </div>
                         <div>
                           <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest">
-                            Beneficiary
+                            Penerima manfaat
                           </p>
-                          <p className="font-bold">Unicorn Motors Intl.</p>
+                          <p className="font-bold">Motora Intl.</p>
                         </div>
                       </div>
                     </div>
@@ -422,7 +404,7 @@ function BookingPage() {
                       disabled={submitting}
                       className="flex-1 py-5 bg-white text-black border border-gray-200 rounded-2xl font-bold hover:bg-gray-50 transition-all disabled:opacity-50"
                     >
-                      Review Details
+                      Detail Ulasan
                     </button>
                     <button
                       onClick={handleSubmitBooking}
@@ -432,10 +414,10 @@ function BookingPage() {
                       {submitting ? (
                         <>
                           <Loader2 className="w-5 h-5 animate-spin" />
-                          Processing...
+                          Memproses...
                         </>
                       ) : (
-                        "Verify Payment"
+                        "Verifikasi Pembayaran"
                       )}
                     </button>
                   </div>
@@ -454,39 +436,40 @@ function BookingPage() {
                   </div>
                   <div>
                     <h2 className="text-3xl font-black mb-2">
-                      Booking Success!
+                      Booking Berhasil!
                     </h2>
                     <p className="text-secondary max-w-md mx-auto">
-                      Your transaction ID{" "}
+                      ID Transaksi Kamu{" "}
                       <strong>
                         #UM-
                         {bookingId?.split("-")[0].toUpperCase() ||
                           car.id.split("-")[0].toUpperCase()}
                       </strong>{" "}
-                      is being processed. We will notify you once the internal
-                      verification is complete.
+                      sedang diproses. Kami akan memberitahumu setelah
+                      verifikasi internal selesai.
                     </p>
                   </div>
 
                   <div className="bg-gray-50 p-8 rounded-3xl inline-block w-full max-w-md text-left space-y-4">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-secondary">
-                        Expected Verification
+                        Estimasi Verifikasi
                       </span>
                       <span className="font-bold flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5" /> Within 15 min
+                        <Clock className="w-3.5 h-3.5" /> 15 menit
                       </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-secondary">Delivery Point</span>
-                      <span className="font-bold">Jakarta HQ</span>
+                      <span className="text-secondary">Lokasi Pengiriman</span>
+                      <span className="font-bold">Kantor Pusat Jakarta</span>
                     </div>
                     <div className="pt-4 border-t border-gray-200">
                       <button
-                        onClick={() => navigate(`/dashboard/payment/${car.id}`)}
+                        onClick={() => navigate(`/bookings}`)}
                         className="flex items-center justify-center gap-2 w-full py-4 bg-black text-white rounded-xl font-bold text-sm"
                       >
-                        Go to Dashboard <ArrowRight className="w-4 h-4" />
+                        Lanjutkan ke Pembayaran{" "}
+                        <ArrowRight className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
@@ -509,17 +492,17 @@ function BookingPage() {
                 </div>
                 <div>
                   <p className="text-[10px] uppercase font-black text-gray-400 tracking-[0.2em] mb-1">
-                    Vehicle Selection
+                    Pemilihan Kendaraan
                   </p>
                   <h4 className="font-bold text-lg leading-tight mb-2">
                     {car.year} {car.model}
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     <span className="text-[9px] font-black px-2 py-0.5 bg-gray-100 rounded-full uppercase">
-                      Limited
+                      Terbatas
                     </span>
                     <span className="text-[9px] font-black px-2 py-0.5 bg-gray-100 rounded-full uppercase">
-                      Verified
+                      Terverifikasi
                     </span>
                   </div>
                 </div>
@@ -533,11 +516,11 @@ function BookingPage() {
                       <FileText className="w-5 h-5 text-white/60" />
                     </div>
                     <span className="text-xs font-bold text-white/40">
-                      SUMMARY
+                      Ringkasan
                     </span>
                   </div>
                   <h3 className="text-2xl font-bold mb-8">
-                    Transaction ID:{" "}
+                    ID Transaksi:{" "}
                     <span className="opacity-60">
                       #UM-{car.id.split("-")[0].toUpperCase()}
                     </span>
@@ -547,10 +530,10 @@ function BookingPage() {
                 <div className="p-8 bg-[#1A1A1A] flex items-center justify-between">
                   <div>
                     <p className="text-sm font-bold text-white mb-0.5">
-                      Booking Fee
+                      Biaya Booking
                     </p>
                     <p className="text-[10px] text-white/40 max-w-[120px] leading-tight">
-                      Applied to final price upon completion
+                      Diterapkan pada harga akhir setelah selesai
                     </p>
                   </div>
                   <p className="text-2xl font-black">
@@ -564,29 +547,29 @@ function BookingPage() {
                       <Clock className="w-4 h-4 text-white/60" />
                     </div>
                     <p className="text-[10px] text-white/60 leading-normal">
-                      Your booking fee is non-refundable but will be applied
-                      toward the final purchase price.
+                      Biaya booking tidak dapat dikembalikan tetapi akan
+                      diterapkan pada harga akhir setelah selesai.
                     </p>
                   </div>
 
                   <div className="space-y-3">
                     <p className="text-[10px] font-black uppercase tracking-widest text-white/30">
-                      Order Details
+                      Detail Pesanan
                     </p>
                     <div className="space-y-2">
                       <DetailItem
                         icon={Calendar}
-                        label="Delivery Date"
+                        label="Tanggal Pengiriman"
                         value="Oct 24, 2024"
                       />
                       <DetailItem
                         icon={MapPin}
-                        label="Collection Point"
+                        label="Titik Pengambilan"
                         value="Jakarta HQ"
                       />
                       <DetailItem
                         icon={ShieldCheck}
-                        label="Warranty"
+                        label="Garansi"
                         value="Elite Care+"
                       />
                     </div>
@@ -600,7 +583,7 @@ function BookingPage() {
 
       <footer className="py-12 border-t border-gray-100 mt-20">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 text-secondary text-sm">
-          <p>© 2024 Unicorn Motors. All Rights Reserved.</p>
+          <p>© 2026 Motora. All Rights Reserved.</p>
           <div className="flex gap-8">
             <a href="#" className="hover:text-black">
               Privacy Policy

@@ -110,12 +110,11 @@ function DashboardBookingsPage() {
       <main className="max-w-7xl mx-auto px-6 py-20">
         <header className="mb-12">
           <h1 className="text-5xl font-black tracking-tight mb-4 text-black">
-            Your Bookings
+            Pemesanan Anda
           </h1>
           <p className="text-secondary text-lg font-medium max-w-2xl leading-relaxed">
-            Manage your current vehicle reservations, track verification
-            progress, and access historical transaction records for Unicorn
-            Motors.
+            Kelola reservasi kendaraan Anda saat ini, lacak kemajuan verifikasi,
+            dan akses catatan transaksi historis untuk Unicorn Motors.
           </p>
         </header>
 
@@ -129,7 +128,7 @@ function DashboardBookingsPage() {
                 : "text-secondary hover:text-black"
             }`}
           >
-            Active
+            Aktif
           </button>
           <button
             onClick={() => setActiveTab("past")}
@@ -139,7 +138,7 @@ function DashboardBookingsPage() {
                 : "text-secondary hover:text-black"
             }`}
           >
-            Past
+            Selesai
           </button>
         </div>
 
@@ -149,24 +148,24 @@ function DashboardBookingsPage() {
             <div className="py-20 flex flex-col items-center gap-4">
               <Loader2 className="w-10 h-10 animate-spin text-gray-200" />
               <p className="text-[10px] font-black uppercase tracking-widest text-secondary">
-                Synchronizing Fleet Records
+                Sinkronisasi Catatan Armada
               </p>
             </div>
           ) : displayedBookings.length === 0 ? (
             <div className="py-32 bg-gray-50 rounded-[3rem] border border-dashed border-gray-200 flex flex-col items-center justify-center text-center px-6">
               <Calendar className="w-16 h-16 text-gray-300 mb-6" />
               <h3 className="text-2xl font-black tracking-tight mb-2">
-                No {activeTab} bookings found
+                Tidak ada {activeTab} bookings ditemukan
               </h3>
               <p className="text-secondary text-sm font-medium mb-10 max-w-sm">
-                Ready to begin your journey? Explore our marketplace to find
-                your next acquisition.
+                Siap memulai perjalanan Anda? Jelajahi marketplace kami untuk
+                menemukan akuisisi Anda berikutnya.
               </p>
               <Link
                 to="/marketplace"
                 className="px-10 py-4 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all shadow-xl"
               >
-                Explore Marketplace
+                Jelajahi Marketplace
               </Link>
             </div>
           ) : (
@@ -218,7 +217,7 @@ function DashboardBookingsPage() {
                               ID: UNM-{booking.id.split("-")[0].toUpperCase()}
                             </span>
                             <span className="w-1 h-1 bg-gray-200 rounded-full" />
-                            <span>Booked {formattedDate}</span>
+                            <span>Dipesan {formattedDate}</span>
                           </div>
                         </div>
                         <span
@@ -232,28 +231,30 @@ function DashboardBookingsPage() {
                         <div>
                           <p className="text-[10px] font-black uppercase tracking-widest text-secondary/40 mb-1">
                             {booking.status === "completed"
-                              ? "Total Paid"
-                              : "Booking Fee"}
+                              ? "Harga Mobil"
+                              : "Biaya Booking"}
                           </p>
                           <p className="text-2xl font-black tracking-tight">
-                            Rp{booking.car.price.toLocaleString()}
+                            {booking.status === "completed"
+                              ? "Rp" + booking.car.price.toLocaleString()
+                              : "Rp" + (50e4).toLocaleString()}
                           </p>
                         </div>
                         <div className="flex items-center gap-4">
                           {booking.status === "completed" ? (
                             <button className="px-8 py-4 bg-white border-2 border-gray-100 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center gap-2 hover:bg-gray-50 transition-all">
-                              <Download className="w-4 h-4" /> Download Invoice
+                              <Download className="w-4 h-4" /> Unduh Invoice
                             </button>
                           ) : (
                             <>
                               <button className="text-[11px] font-black uppercase tracking-widest text-secondary hover:text-black transition-colors px-4">
-                                Cancel
+                                Batal
                               </button>
                               <Link
                                 to={`/dashboard/payment/${booking.id}`}
                                 className="px-10 py-4 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-[11px] hover:scale-105 active:scale-95 transition-all shadow-xl"
                               >
-                                View Details
+                                Lihat Detail
                               </Link>
                             </>
                           )}
@@ -266,45 +267,7 @@ function DashboardBookingsPage() {
             })
           )}
         </div>
-
-        {/* Concierge Support section */}
-        <section>
-          <h4 className="text-2xl font-black tracking-tight mb-10">
-            Concierge Support
-          </h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <ConciergeCard
-              icon={UserCheck}
-              title="Dedicated Agent"
-              desc="Our premium advisors are available 24/7 to handle your booking paperwork."
-            />
-            <ConciergeCard
-              icon={FileText}
-              title="Paperwork Assist"
-              desc="Let us manage the tax registrations and ownership transfers for you."
-            />
-            <ConciergeCard
-              icon={Truck}
-              title="Doorstep Delivery"
-              desc="Schedule a premium enclosed transport delivery to your home or office."
-            />
-          </div>
-        </section>
       </main>
-    </div>
-  );
-}
-
-function ConciergeCard({ icon: Icon, title, desc }: any) {
-  return (
-    <div className="bg-gray-50/50 p-10 rounded-[2.5rem] border border-gray-50 group hover:bg-white hover:shadow-premium transition-all duration-500">
-      <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:bg-black group-hover:text-white transition-colors duration-500">
-        <Icon className="w-6 h-6" />
-      </div>
-      <h5 className="font-black text-lg mb-3">{title}</h5>
-      <p className="text-secondary text-sm font-medium leading-relaxed">
-        {desc}
-      </p>
     </div>
   );
 }

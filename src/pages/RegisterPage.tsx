@@ -74,10 +74,10 @@ function RegisterPage() {
         <div className="w-full max-w-md space-y-12">
           <div className="space-y-4">
             <h2 className="text-4xl font-black tracking-tight">
-              Create Account
+              Buat Akun
             </h2>
             <p className="text-secondary font-medium">
-              Join Unicorn Motors and start your journey today.
+              Bergabunglah dengan Unicorn Motors dan mulai perjalanan Anda hari ini.
             </p>
           </div>
 
@@ -90,7 +90,7 @@ function RegisterPage() {
 
             <div className="space-y-2">
               <label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-2">
-                Full Name
+                Nama Lengkap
               </label>
               <div className="relative group">
                 <User className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-black transition-colors" />
@@ -107,7 +107,7 @@ function RegisterPage() {
 
             <div className="space-y-2">
               <label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-2">
-                Email Address
+                Alamat Email
               </label>
               <div className="relative group">
                 <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-black transition-colors" />
@@ -124,7 +124,7 @@ function RegisterPage() {
 
             <div className="space-y-2">
               <label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-2">
-                Password
+                Kata Sandi
               </label>
               <div className="relative group">
                 <Lock className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-black transition-colors" />
@@ -154,9 +154,9 @@ function RegisterPage() {
 
           <div className="text-center">
             <p className="text-secondary font-medium">
-              Already have an account?{" "}
+              Sudah punya akun?{" "}
               <Link to="/login" className="text-black font-bold underline">
-                Sign In
+                Masuk
               </Link>
             </p>
           </div>

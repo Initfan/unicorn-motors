@@ -241,7 +241,7 @@ function DashboardPaymentPage() {
       <div className="min-h-screen bg-[#F8F9FA] flex flex-col items-center justify-center gap-4">
         <Loader2 className="w-12 h-12 animate-spin text-black" />
         <p className="font-bold text-secondary uppercase tracking-widest text-xs">
-          Authenticating Session...
+          Memuat Transaksi...
         </p>
       </div>
     );
@@ -254,16 +254,18 @@ function DashboardPaymentPage() {
           <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
             <Info className="w-10 h-10 text-gray-300" />
           </div>
-          <h2 className="text-2xl font-black mb-2">No Active Booking</h2>
+          <h2 className="text-2xl font-black mb-2">
+            Tidak Ada Transaksi Aktif
+          </h2>
           <p className="text-secondary text-sm mb-8">
-            You haven't initiated an acquisition for this vehicle yet. Please
-            visit the vehicle detail page to start the process.
+            Anda belum memulai transaksi untuk kendaraan ini. Silakan kunjungi
+            halaman detail kendaraan untuk memulai prosesnya.
           </p>
           <Link
             to="/"
             className="inline-block px-8 py-3 bg-black text-white rounded-full font-bold text-sm"
           >
-            Return to Marketplace
+            Kembali ke Marketplace
           </Link>
         </div>
       </div>
@@ -274,9 +276,11 @@ function DashboardPaymentPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA]">
         <div className="text-center">
-          <h2 className="text-2xl font-black mb-4">Car Information Missing</h2>
+          <h2 className="text-2xl font-black mb-4">
+            Informasi Kendaraan Hilang
+          </h2>
           <Link to="/" className="text-blue-600 font-bold hover:underline">
-            Return to Marketplace
+            Kembali ke Marketplace
           </Link>
         </div>
       </div>
@@ -339,7 +343,7 @@ function DashboardPaymentPage() {
             <div className="bg-[#F8F9FA] rounded-[3rem] p-10 md:p-16 relative overflow-hidden">
               <div className="relative z-10">
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary mb-2">
-                  Order #{orderNumber}
+                  Pesanan #{orderNumber}
                 </p>
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                   <div>
@@ -347,12 +351,12 @@ function DashboardPaymentPage() {
                       {car.make} {car.model}
                     </h1>
                     <p className="text-secondary font-medium uppercase tracking-widest text-xs">
-                      Premium Acquisition Flow
+                      Proses Akuisisi Premium
                     </p>
                   </div>
                   <div className="text-right">
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary mb-1">
-                      Total Amount Due
+                      Total Pembayaran
                     </p>
                     <h2 className="text-4xl font-black tracking-tighter">
                       Rp{total.toLocaleString("id-ID", {})}
@@ -400,7 +404,7 @@ function DashboardPaymentPage() {
 
                   <div className="flex items-center justify-between mb-3">
                     <p className="text-xs font-black uppercase tracking-[0.1em]">
-                      Acquisition Progress
+                      Proses Transaksi
                     </p>
                     <p className="text-xs font-black">{progress} Complete</p>
                   </div>
@@ -437,7 +441,7 @@ function DashboardPaymentPage() {
             {/* Transaction Timeline */}
             <div className="space-y-4">
               <h3 className="text-2xl font-black tracking-tight mb-6">
-                Transaction Timeline
+                Timeline Transaksi
               </h3>
 
               {/* Step 1: Paid */}
@@ -455,14 +459,14 @@ function DashboardPaymentPage() {
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <span className="bg-gray-100 px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest text-gray-500">
-                        Step 01
+                        Langkah 01
                       </span>
-                      <h4 className="font-bold text-lg">Booking Fee</h4>
+                      <h4 className="font-bold text-lg">Biaya Booking</h4>
                     </div>
                     <p className="text-xs text-secondary font-medium">
                       {isBookingVerified
-                        ? `Reservation secured on ${new Date(booking.created_at).toLocaleDateString()}`
-                        : "Awaiting internal bank verification"}
+                        ? `Reservasi diamankan pada ${new Date(booking.created_at).toLocaleDateString()}`
+                        : "Menunggu verifikasi bank internal"}
                     </p>
                   </div>
                 </div>
@@ -518,13 +522,13 @@ function DashboardPaymentPage() {
                         <h4
                           className={`font-bold text-lg ${!isBookingVerified && "text-gray-400"}`}
                         >
-                          Down Payment (30%) & Identity Verification
+                          Uang Muka (30%) & Verifikasi Identitas
                         </h4>
                       </div>
                       <p className="text-xs text-secondary font-medium">
                         {isDPPaid
-                          ? "Your identity and DP clearance are being reviewed by the concierge."
-                          : "Secure your acquisition with 30% DP and upload your ID Card (KTP)"}
+                          ? "Identitas dan clearance DP Anda sedang ditinjau oleh tim kami."
+                          : "Amankan akuisisi Anda dengan DP 30% dan unggah KTP Anda"}
                       </p>
                     </div>
                   </div>
@@ -537,7 +541,7 @@ function DashboardPaymentPage() {
                     </p>
                     {!isDPPaid && (
                       <p className="text-[10px] font-black uppercase tracking-widest text-amber-500 flex items-center justify-end gap-1">
-                        <Clock className="w-3 h-3" /> In Review
+                        <Clock className="w-3 h-3" /> Dalam Tinjauan
                       </p>
                     )}
                   </div>
@@ -549,7 +553,7 @@ function DashboardPaymentPage() {
                     <div className="pt-8 border-t border-gray-50 grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div className="space-y-4">
                         <h5 className="text-[10px] font-black uppercase tracking-widest text-secondary">
-                          1. Identity Verification (KTP)
+                          1. Verifikasi Identitas (KTP)
                         </h5>
                         <div className="relative group">
                           <input
@@ -580,7 +584,7 @@ function DashboardPaymentPage() {
                                   <ShieldCheck className="w-5 h-5" />
                                 </div>
                                 <p className="text-[10px] font-black uppercase tracking-tight text-secondary">
-                                  Drop KTP Image Here
+                                  Taruh Gambar KTP di Sini
                                 </p>
                               </>
                             )}
@@ -590,7 +594,7 @@ function DashboardPaymentPage() {
 
                       <div className="space-y-4">
                         <h5 className="text-[10px] font-black uppercase tracking-widest text-secondary">
-                          2. Transfer Receipt (DP)
+                          2. Bukti Transfer (DP)
                         </h5>
                         <div className="relative group">
                           <input
@@ -621,7 +625,7 @@ function DashboardPaymentPage() {
                                   <CreditCard className="w-5 h-5" />
                                 </div>
                                 <p className="text-[10px] font-black uppercase tracking-tight text-secondary">
-                                  Attach Transfer Receipt
+                                  Taruh Bukti Transfer di Sini
                                 </p>
                               </>
                             )}
@@ -639,10 +643,10 @@ function DashboardPaymentPage() {
                         {isUploading ? (
                           <>
                             <Loader2 className="w-4 h-4 animate-spin" />{" "}
-                            Processing
+                            Memproses
                           </>
                         ) : (
-                          <>Pay Now & Verify Identity</>
+                          <>Bayar Sekarang & Verifikasi Identitas</>
                         )}
                       </button>
                     </div>
@@ -666,10 +670,10 @@ function DashboardPaymentPage() {
                     <div className="relative z-10">
                       <div className="flex items-center gap-3 mb-8">
                         <div className="px-3 py-1 bg-white/10 rounded-full text-[8px] font-black uppercase tracking-widest border border-white/10">
-                          Parallel Process
+                          Proses Paralel
                         </div>
                         <h4 className="text-xl font-black tracking-tight">
-                          Vehicle Administration
+                          Administrasi Kendaraan
                         </h4>
                       </div>
 
@@ -679,7 +683,7 @@ function DashboardPaymentPage() {
                           <div className="flex justify-between items-start">
                             <div>
                               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-1">
-                                Document 01
+                                Dokumen 01
                               </p>
                               <h5 className="font-bold">STNK & Plat Nomor</h5>
                             </div>
@@ -687,8 +691,8 @@ function DashboardPaymentPage() {
                           </div>
                           <div className="space-y-2">
                             <div className="flex justify-between text-[10px] font-bold uppercase">
-                              <span>Processing</span>
-                              <span className="text-blue-400">~2 Weeks</span>
+                              <span>Memproses</span>
+                              <span className="text-blue-400">~2 Minggu</span>
                             </div>
                             <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
                               <motion.div
@@ -709,16 +713,16 @@ function DashboardPaymentPage() {
                           <div className="flex justify-between items-start">
                             <div>
                               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-1">
-                                Document 02
+                                Dokumen 02
                               </p>
-                              <h5 className="font-bold">BPKB (Original)</h5>
+                              <h5 className="font-bold">BPKB (Asli)</h5>
                             </div>
                             <Clock className="w-5 h-5 text-amber-400" />
                           </div>
                           <div className="space-y-2">
                             <div className="flex justify-between text-[10px] font-bold uppercase">
-                              <span>Queueing</span>
-                              <span className="text-amber-400">~2 Months</span>
+                              <span>Dalam Antrian</span>
+                              <span className="text-amber-400">~2 Bulan</span>
                             </div>
                             <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
                               <motion.div
@@ -778,15 +782,15 @@ function DashboardPaymentPage() {
                         <h4
                           className={`font-bold text-lg ${!isFullPaymentEnabled && "text-gray-400"}`}
                         >
-                          Full Payment
+                          Pembayaran Penuh
                         </h4>
                       </div>
                       <p className="text-xs text-secondary font-medium">
                         {isFullPaid
-                          ? "Payment verified. Preparing for final vehicle handover."
+                          ? "Pembayaran terverifikasi. Persiapan untuk serah terima kendaraan akhir."
                           : isFullPaymentEnabled
-                            ? "Administration started. You can now settle the remaining balance."
-                            : "Locked until vehicle administration begins."}
+                            ? "Administrasi dimulai. Anda dapat melunasi sisa pembayaran sekarang."
+                            : "Terkunci sampai administrasi kendaraan dimulai."}
                       </p>
                     </div>
                   </div>
@@ -799,11 +803,11 @@ function DashboardPaymentPage() {
                     </p>
                     {isFullPaid ? (
                       <p className="text-[10px] font-black uppercase tracking-widest text-green-600 flex items-center justify-end gap-1">
-                        <Check className="w-3 h-3" /> Paid
+                        <Check className="w-3 h-3" /> Lunas
                       </p>
                     ) : (
                       <p className="text-[10px] font-black uppercase tracking-widest text-secondary/40">
-                        Scheduled
+                        Dijadwalkan
                       </p>
                     )}
                   </div>
@@ -813,7 +817,7 @@ function DashboardPaymentPage() {
                 {isFullPaymentEnabled && !isFullPaid && (
                   <div className="pt-8 border-t border-gray-50 space-y-4">
                     <h5 className="text-[10px] font-black uppercase tracking-widest text-secondary">
-                      Upload Proof of Full Payment
+                      Upload Bukti Pembayaran Penuh
                     </h5>
                     <div className="relative group">
                       <input
@@ -847,7 +851,7 @@ function DashboardPaymentPage() {
                               <Download className="w-6 h-6" />
                             </div>
                             <p className="text-xs font-bold text-secondary">
-                              Drag & Drop Receipt or Click to Browse
+                              Seret & Lepas Struk atau Klik untuk Menjelajahi
                             </p>
                           </>
                         )}
@@ -858,7 +862,9 @@ function DashboardPaymentPage() {
                       disabled={!fullReceiptFile || isUploading}
                       className="w-full py-5 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:scale-[1.01] active:scale-95 transition-all disabled:opacity-30"
                     >
-                      {isUploading ? "Uploading..." : "Confirm Full Payment"}
+                      {isUploading
+                        ? "Mengupload..."
+                        : "Konfirmasi Pembayaran Penuh"}
                     </button>
                   </div>
                 )}
@@ -879,16 +885,15 @@ function DashboardPaymentPage() {
                       <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                           <div className="px-3 py-1 bg-black text-white rounded-full text-[8px] font-black uppercase tracking-widest">
-                            Final Stage
+                            Langkah Terkahir
                           </div>
                           <h4 className="text-xl font-black tracking-tight">
-                            Handover Protocol
+                            Protokol Serah Terima
                           </h4>
                         </div>
                         {booking.status === "completed" && (
                           <div className="flex items-center gap-2 text-green-600 font-black uppercase text-[10px] tracking-widest">
-                            <Check className="w-4 h-4" /> Delivered & Handed
-                            Over
+                            <Check className="w-4 h-4" /> Selesai & Diserahkan
                           </div>
                         )}
                       </div>
@@ -966,7 +971,7 @@ function DashboardPaymentPage() {
                             booking.status === "request_delivery") && (
                             <div className="px-6 py-3 bg-black text-white rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-3">
                               <span className="w-2 h-2 bg-blue-400 rounded-full animate-ping" />
-                              Active Dispatch
+                              Pengiriman Aktif
                             </div>
                           )}
                         </div>
@@ -992,11 +997,11 @@ function DashboardPaymentPage() {
               </div>
               <div className="p-8">
                 <div className="flex items-center justify-between mb-6">
-                  <h4 className="text-xl font-bold">Order Details</h4>
+                  <h4 className="text-xl font-bold">Detail Pesanan</h4>
                   <ShieldCheck className="w-5 h-5 text-green-600" />
                 </div>
                 <p className="text-[10px] font-black uppercase tracking-widest text-secondary mb-6 pb-6 border-b border-gray-50">
-                  Verified Transaction • Concierge Handled
+                  Transaksi Terverifikasi • Ditangani oleh Layanan Konsierge
                 </p>
 
                 <div className="space-y-4">
@@ -1010,13 +1015,13 @@ function DashboardPaymentPage() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
-                      mileage
+                      Jarak Tempuh
                     </span>
                     <span className="text-xs font-bold">{car.mileage}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
-                      year
+                      Tahun
                     </span>
                     <span className="text-xs font-bold">{car.year}</span>
                   </div>
@@ -1027,12 +1032,12 @@ function DashboardPaymentPage() {
             {/* Billing Summary */}
             <div className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm">
               <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary mb-8">
-                Billing Summary
+                Ringkasan Tagihan
               </h4>
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-secondary font-medium">
-                    Base Price
+                    Harga Dasar
                   </span>
                   <span className="text-xs font-bold">
                     Rp
@@ -1088,9 +1093,9 @@ function DashboardPaymentPage() {
       <footer className="py-12 border-t border-gray-100 mt-12 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <h3 className="text-xs font-black uppercase tracking-widest">
-            Unicorn Motors{" "}
+            Motora{" "}
             <span className="font-medium text-secondary ml-2 normal-case">
-              © 2024 Administrative Console
+              © 2026
             </span>
           </h3>
           <div className="flex gap-8 text-[10px] font-black uppercase tracking-widest text-secondary">

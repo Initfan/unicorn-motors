@@ -18,12 +18,12 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
         />
         {car.isNewArrival && (
           <span className="absolute top-4 left-4 bg-black text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
-            New Arrival
+            Baru Tiba
           </span>
         )}
         {car.isCertified && (
           <span className="absolute top-4 left-4 bg-white text-black text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
-            Certified
+            Bersertifikat
           </span>
         )}
       </div>
@@ -54,7 +54,7 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
           to={`/car/${car.id}`}
           className="block w-full py-3 bg-gray-100 rounded-xl text-sm font-bold hover:bg-gray-200 transition-colors text-center"
         >
-          View Detail
+          Lihat Detail
         </Link>
       </div>
     </div>

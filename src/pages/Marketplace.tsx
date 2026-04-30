@@ -44,7 +44,7 @@ function Marketplace() {
       const { data, error } = await query;
 
       if (error) {
-        console.error("Error fetching cars:", error);
+        console.error("Terjadi kesalahan saat mengambil data mobil:", error);
       } else if (data) {
         const formattedCars: Car[] = data.map((item: any) => ({
           id: item.id,
@@ -69,16 +69,6 @@ function Marketplace() {
     fetchCars();
   }, [filters]);
 
-  // const featuredCar = useMemo(
-  //   () => cars.find((car) => car.isEditorsChoice) || cars[0],
-  //   [cars],
-  // );
-
-  // const regularCars = useMemo(
-  //   () => cars.filter((car) => car.id !== featuredCar?.id),
-  //   [cars, featuredCar],
-  // );
-
   const resetFilters = () => {
     setFilters({
       bodyType: null,
@@ -96,14 +86,14 @@ function Marketplace() {
         <FilterSidebar filters={filters} onFilterChange={setFilters} />
 
         <main className="flex-1 p-8 overflow-y-auto">
-          {/* Main Title & Sort */}
+          {/* Judul Utama & Sortir */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
               <h2 className="text-4xl font-black tracking-tight mb-2">
-                Available Inventory
+                Inventaris Tersedia
               </h2>
               <p className="text-secondary text-sm font-medium">
-                Showing {cars.length} luxury & performance vehicles
+                Menampilkan {cars.length} mobil mewah & performa
               </p>
             </div>
 
@@ -116,15 +106,15 @@ function Marketplace() {
                   onClick={resetFilters}
                   className="flex items-center gap-2 text-red-500 text-[10px] font-black uppercase tracking-widest hover:underline"
                 >
-                  <XCircle className="w-3.5 h-3.5" /> Clear Filters
+                  <XCircle className="w-3.5 h-3.5" /> Bersihkan Filter
                 </button>
               )}
               <div className="flex items-center gap-3">
                 <span className="text-[10px] font-black text-secondary/40 uppercase tracking-widest">
-                  Sort:
+                  Urutkan:
                 </span>
                 <button className="flex items-center gap-2 bg-white border border-gray-100 px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest shadow-sm hover:bg-gray-50 transition-all">
-                  Recently Added
+                  Baru Ditambahkan
                   <ChevronRight className="w-4 h-4 rotate-90" />
                 </button>
               </div>
@@ -134,30 +124,27 @@ function Marketplace() {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-32 text-secondary gap-4">
               <Loader2 className="w-12 h-12 animate-spin text-black" />
-              <p className="font-bold">Syncing with global inventory...</p>
+              <p className="font-bold">Menyinkronkan inventaris global...</p>
             </div>
           ) : (
             <div className="space-y-12">
               {cars.length === 0 ? (
                 <div className="text-center py-20 bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200">
                   <p className="text-xl font-bold text-gray-400 mb-2">
-                    No vehicles found
+                    Tidak ada kendaraan ditemukan
                   </p>
                   <p className="text-sm text-gray-400">
-                    Try adjusting your filters or check back later.
+                    Coba sesuaikan filter Anda atau periksa kembali nanti.
                   </p>
                 </div>
               ) : (
                 <>
-                  {/* First Row of Cars */}
+                  {/* Baris Pertama Mobil */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {cars.slice(0, 3).map((car) => (
+                    {cars.slice(0, 20).map((car) => (
                       <CarCard key={car.id} car={car} />
                     ))}
                   </div>
-
-                  {/* Featured Section */}
-                  {/* {featuredCar && <FeaturedCard car={featuredCar} />} */}
 
                   {/* Pagination */}
                   <div className="flex items-center justify-center gap-2 pt-8 pb-12">

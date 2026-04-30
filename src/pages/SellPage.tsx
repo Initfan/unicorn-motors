@@ -6,23 +6,17 @@ import { useAuth } from "../context/AuthContext";
 import {
   Camera,
   Info,
-  History,
   DollarSign,
   Upload,
-  Plus,
-  ChevronRight,
   MessageSquare,
-  FileText,
-  Check,
   Loader2,
   X,
 } from "lucide-react";
 
 const SELL_STEPS = [
-  { id: "media", label: "Media & Photos", icon: Camera },
-  { id: "details", label: "Vehicle Details", icon: Info },
-  { id: "history", label: "Vehicle History", icon: History },
-  { id: "pricing", label: "Pricing & Terms", icon: DollarSign },
+  { id: "media", label: "Media & Foto", icon: Camera },
+  { id: "details", label: "Detail Kendaraan", icon: Info },
+  { id: "pricing", label: "Harga & Ketentuan", icon: DollarSign },
 ];
 
 function SellPage() {
@@ -99,7 +93,7 @@ function SellPage() {
 
   const handleSubmit = async () => {
     if (!user) {
-      alert("Please sign in to submit a listing.");
+      alert("Silahkan login terlebih dahulu untuk mengirimkan listing.");
       navigate("/login");
       return;
     }
@@ -109,7 +103,7 @@ function SellPage() {
       const mainImageUrl = await uploadPhotos();
 
       if (!mainImageUrl) {
-        alert("Please upload at least one photo.");
+        alert("Silahkan unggah minimal 1 foto.");
         setSubmitting(false);
         return;
       }
@@ -119,6 +113,7 @@ function SellPage() {
         .from("cars")
         .insert([
           {
+            vin: formData.vin,
             make: formData.make || formData.model.split(" ")[0] || "Unknown",
             model: formData.model,
             year: parseInt(formData.year),
@@ -152,7 +147,7 @@ function SellPage() {
       if (sellError) throw sellError;
 
       alert(
-        "Your vehicle has been submitted for review! Track progress in your dashboard.",
+        "Kendaraan Anda telah berhasil dikirim untuk ditinjau! Lacak kemajuan di dasbor Anda.",
       );
       navigate("/sell/requests");
     } catch (error: any) {
@@ -180,7 +175,7 @@ function SellPage() {
         <aside className="hidden lg:block w-72 flex-shrink-0">
           <div className="sticky top-28 space-y-8">
             <div>
-              <h1 className="text-2xl font-black mb-8">Submit Your Listing</h1>
+              <h1 className="text-2xl font-black mb-8">Kirimkan Daftar Anda</h1>
               <nav className="space-y-2">
                 {SELL_STEPS.map((step) => (
                   <button
@@ -200,19 +195,6 @@ function SellPage() {
                 ))}
               </nav>
             </div>
-
-            {/* <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
-              <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">
-                Concierge Support
-              </p>
-              <p className="text-sm font-bold mb-4 leading-relaxed">
-                Need help with your listing? Our specialists are available 24/7.
-              </p>
-              <button className="flex items-center gap-2 text-xs font-black group">
-                Chat with us{" "}
-                <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div> */}
           </div>
         </aside>
 
@@ -224,10 +206,10 @@ function SellPage() {
             className="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-gray-100 scroll-mt-28"
           >
             <div className="mb-8">
-              <h2 className="text-2xl font-black mb-2">Media & Photos</h2>
+              <h2 className="text-2xl font-black mb-2">Media & Foto</h2>
               <p className="text-secondary text-sm">
-                High-quality photos increase sale speed by 40%. Upload at least
-                10 photos.
+                Foto berkualitas tinggi meningkatkan kecepatan penjualan sebesar
+                40%. Unggah maximal 1 foto.
               </p>
             </div>
 
@@ -242,19 +224,20 @@ function SellPage() {
                   accept="image/*"
                   className="hidden"
                   ref={fileInputRef}
+                  max={1}
                   onChange={handlePhotoSelect}
                 />
                 <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                   <Upload className="w-6 h-6 text-gray-400" />
                 </div>
                 <p className="font-bold text-lg mb-1">
-                  Drop vehicle photos here
+                  Jatuhkan foto kendaraan di sini
                 </p>
                 <p className="text-xs text-secondary">
-                  or click to browse from your computer
+                  atau klik untuk menjelajah dari komputer Anda
                 </p>
                 <p className="text-[10px] text-gray-300 mt-4 uppercase tracking-[0.2em]">
-                  Accepts high-res JPG, PNG, and HEIC up to 25MB each.
+                  Menerima JPG, PNG, dan HEIC resolusi tinggi hingga 5MB.
                 </p>
               </div>
 
@@ -281,20 +264,11 @@ function SellPage() {
                       </button>
                       {i === 0 && (
                         <span className="absolute bottom-3 left-3 px-2 py-1 bg-black/60 backdrop-blur-md text-[8px] font-black uppercase tracking-widest text-white rounded-md">
-                          Cover Photo
+                          Foto Utama
                         </span>
                       )}
                     </div>
                   ))}
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="rounded-2xl bg-gray-50 border border-gray-100 flex flex-col items-center justify-center gap-2 group cursor-pointer hover:bg-gray-100 transition-colors aspect-square"
-                  >
-                    <Plus className="w-6 h-6 text-gray-300" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-300">
-                      Add More
-                    </span>
-                  </button>
                 </div>
               )}
             </div>
@@ -307,9 +281,9 @@ function SellPage() {
           >
             <div className="flex items-start justify-between mb-8">
               <div>
-                <h2 className="text-2xl font-black mb-2">Vehicle Details</h2>
+                <h2 className="text-2xl font-black mb-2">Detail Kendaraan</h2>
                 <p className="text-secondary text-sm">
-                  Provide accurate technical specifications.
+                  Berikan spesifikasi teknis yang akurat.
                 </p>
               </div>
             </div>
@@ -317,12 +291,12 @@ function SellPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2 col-span-1">
                 <label className="text-xs font-black uppercase tracking-widest text-gray-500 flex items-center gap-1.5">
-                  VIN Number{" "}
+                  Nomor Rangka{" "}
                   <MessageSquare className="w-3 h-3 cursor-help text-blue-500" />
                 </label>
                 <input
                   type="text"
-                  placeholder="WBA1234567890..."
+                  placeholder="B123ABC..."
                   className="w-full px-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all"
                   value={formData.vin}
                   onChange={(e) =>
@@ -333,7 +307,7 @@ function SellPage() {
               <div className="grid grid-cols-3 gap-4">
                 <div className="space-y-2 col-span-1">
                   <label className="text-xs font-black uppercase tracking-widest text-gray-500">
-                    Year
+                    Tahun
                   </label>
                   <input
                     type="text"
@@ -347,7 +321,7 @@ function SellPage() {
                 </div>
                 <div className="space-y-2 col-span-2">
                   <label className="text-xs font-black uppercase tracking-widest text-gray-500">
-                    Make & Model
+                    Merek & Model
                   </label>
                   <input
                     type="text"
@@ -362,7 +336,7 @@ function SellPage() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-black uppercase tracking-widest text-gray-500">
-                  Fuel Type
+                  Bahan Bakar
                 </label>
                 <select
                   className="w-full px-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all appearance-none"
@@ -379,7 +353,7 @@ function SellPage() {
               </div>
               <div className="space-y-2 relative">
                 <label className="text-xs font-black uppercase tracking-widest text-gray-500">
-                  Mileage
+                  Jarak Tempuh
                 </label>
                 <div className="relative">
                   <input
@@ -392,13 +366,13 @@ function SellPage() {
                     }
                   />
                   <span className="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase text-gray-400">
-                    Miles
+                    Jarak Tempuh
                   </span>
                 </div>
               </div>
               <div className="space-y-2 col-span-full">
                 <label className="text-xs font-black uppercase tracking-widest text-gray-500">
-                  Vehicle Narrative
+                  Cerita Kendaraan
                 </label>
                 <textarea
                   placeholder="Tell the story of your car. Mention modifications, service records, and standout features..."
@@ -412,81 +386,15 @@ function SellPage() {
             </div>
           </section>
 
-          {/* Section: History */}
-          {/* <section
-            id="history"
-            className="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-gray-100 scroll-mt-28"
-          >
-            <div className="mb-8">
-              <h2 className="text-2xl font-black mb-2">Vehicle History</h2>
-              <p className="text-secondary text-sm">
-                Transparency builds trust with potential buyers.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-              <button className="flex items-center justify-between p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors group text-left">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-white rounded-xl shadow-sm">
-                    <FileText className="w-5 h-5 text-gray-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold">Upload Carfax/AutoCheck</p>
-                    <p className="text-[10px] text-gray-400 uppercase font-black tracking-widest">
-                      PDF format preferred
-                    </p>
-                  </div>
-                </div>
-                <ChevronRight className="w-4 h-4 text-gray-300 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="flex items-center justify-between p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors group text-left">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-white rounded-xl shadow-sm">
-                    <Camera className="w-5 h-5 text-gray-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold">Service Log Book</p>
-                    <p className="text-[10px] text-gray-400 uppercase font-black tracking-widest">
-                      Scan or photo of records
-                    </p>
-                  </div>
-                </div>
-                <ChevronRight className="w-4 h-4 text-gray-300 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <p className="text-xs font-black uppercase tracking-widest text-gray-500">
-                Quick Disclosures
-              </p>
-              <div className="flex flex-wrap gap-4">
-                {["Clean Title", "Accident Free", "One Owner"].map((item) => (
-                  <label
-                    key={item}
-                    className="flex-1 min-w-[140px] flex items-center justify-between px-5 py-4 bg-gray-50 rounded-2xl cursor-pointer hover:bg-gray-100 transition-all border border-transparent has-[:checked]:border-black/10 has-[:checked]:bg-white has-[:checked]:shadow-sm"
-                  >
-                    <span className="text-sm font-bold">{item}</span>
-                    <div className="relative">
-                      <input type="checkbox" className="peer sr-only" />
-                      <div className="w-5 h-5 border-2 border-gray-200 rounded-lg peer-checked:bg-black peer-checked:border-black transition-all flex items-center justify-center">
-                        <Check className="w-3 h-3 text-white" />
-                      </div>
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </div>
-          </section> */}
-
           {/* Section: Pricing & Terms */}
           <section
             id="pricing"
             className="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-gray-100 scroll-mt-28"
           >
             <div className="mb-8">
-              <h2 className="text-2xl font-black mb-2">Pricing & Terms</h2>
+              <h2 className="text-2xl font-black mb-2">Harga & Ketentuan</h2>
               <p className="text-secondary text-sm">
-                Set your asking price and listing conditions.
+                Tetapkan harga jual dan ketentuan listing.
               </p>
             </div>
 
@@ -494,7 +402,7 @@ function SellPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-2">
                   <label className="text-xs font-black uppercase tracking-widest text-gray-500">
-                    Asking Price
+                    Harga Jual
                   </label>
                   <div className="relative">
                     <span className="absolute left-6 top-1/2 -translate-y-1/2 font-bold text-gray-400">
@@ -514,10 +422,10 @@ function SellPage() {
 
                 <div className="space-y-4">
                   <label className="text-xs font-black uppercase tracking-widest text-gray-500">
-                    Negotiability
+                    Negosiasi
                   </label>
                   <div className="flex gap-4">
-                    {["Firm", "Negotiable"].map((type) => (
+                    {["Tetap", "Nego"].map((type) => (
                       <label
                         key={type}
                         className={`flex-1 flex items-center justify-center gap-2 px-5 py-4 rounded-2xl cursor-pointer transition-all border ${formData.negotiable === type ? "bg-black text-white border-black" : "bg-gray-50 text-secondary border-transparent hover:bg-gray-100"}`}
@@ -538,22 +446,6 @@ function SellPage() {
                 </div>
               </div>
 
-              <div className="p-6 bg-blue-50/50 rounded-3xl border border-blue-100 flex items-start gap-4">
-                <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
-                  <DollarSign className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-blue-900 mb-1">
-                    Unicorn Protection Plan
-                  </h4>
-                  <p className="text-xs text-blue-800/70 leading-relaxed">
-                    By listing with us, you're automatically covered by our $1M
-                    transaction protection. A 2.5% success fee is only charged
-                    if your vehicle sells.
-                  </p>
-                </div>
-              </div>
-
               <div className="space-y-4 pt-4 border-t border-gray-100">
                 <div className="flex items-start gap-4">
                   <input
@@ -562,12 +454,12 @@ function SellPage() {
                     required
                   />
                   <p className="text-sm text-secondary leading-relaxed">
-                    I agree to the{" "}
+                    Saya menyetujui{" "}
                     <span className="text-black font-bold underline cursor-pointer">
-                      Terms of Service
+                      Ketentuan Layanan
                     </span>{" "}
-                    and confirm that all provided information about the vehicle
-                    is accurate.
+                    dan mengonfirmasi bahwa semua informasi yang diberikan
+                    tentang kendaraan akurat.
                   </p>
                 </div>
               </div>
@@ -584,8 +476,8 @@ function SellPage() {
                 />
                 <span className="text-xs font-bold text-secondary">
                   {submitting
-                    ? "Uploading & Saving..."
-                    : "Changes not yet saved"}
+                    ? "Mengunggah & Menyimpan..."
+                    : "Perubahan belum disimpan"}
                 </span>
               </div>
               <div className="flex items-center gap-4">
@@ -597,7 +489,7 @@ function SellPage() {
                   {submitting ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
-                    "Publish"
+                    "Terbitkan"
                   )}
                 </button>
               </div>

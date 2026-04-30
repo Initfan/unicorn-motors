@@ -35,14 +35,15 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
     let mileage: number | null = null;
     if (val === "10k") mileage = 10000;
     if (val === "30k") mileage = 30000;
-    if (val === "50k+") mileage = 500000; // Large number for any
+    if (val === "50k+") mileage = 500000; // angka besar untuk “semua”
     onFilterChange({ ...filters, maxMileage: mileage });
   };
 
   return (
     <aside className="w-72 bg-white h-[calc(100vh-73px)] sticky top-[73px] p-6 border-r border-gray-100 overflow-y-auto hidden md:block">
+      {/* Tipe Bodi */}
       <div className="mb-8">
-        <h3 className="filter-section-title">Body Type</h3>
+        <h3 className="filter-section-title">Tipe Bodi</h3>
         <div className="grid grid-cols-2 gap-3">
           {["Sedan", "SUV", "Coupe", "Convertible"].map((type) => (
             <button
@@ -73,10 +74,11 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
+      {/* Bahan Bakar */}
       <div className="mb-8">
-        <h3 className="filter-section-title">Fuel Type</h3>
+        <h3 className="filter-section-title">Bahan Bakar</h3>
         <div className="space-y-3">
-          {["Electric", "Hybrid", "Petrol"].map((type) => (
+          {["Petrol", "Hybrid", "Electric", "Diesel"].map((type) => (
             <label
               key={type}
               className="flex items-center gap-3 cursor-pointer group"
@@ -101,9 +103,10 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
+      {/* Tahun Produksi Minimal */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="filter-section-title mb-0">Min Production Year</h3>
+          <h3 className="filter-section-title mb-0">Tahun Produksi Minimal</h3>
           <span className="text-[10px] bg-gray-100 px-2 py-1 rounded font-bold">
             {filters.minYear}
           </span>
@@ -120,11 +123,12 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         />
       </div>
 
+      {/* Kilometer Maksimal */}
       <div className="mb-8">
-        <h3 className="filter-section-title">Max Mileage</h3>
+        <h3 className="filter-section-title">Kilometer Maksimal</h3>
         <div className="flex flex-wrap gap-2">
-          {["Any", "10k", "30k", "50k+"].map((label) => {
-            const isAny = label === "Any";
+          {["Semua", "10k", "30k", "50k+"].map((label) => {
+            const isAny = label === "Semua";
             const val =
               label === "10k" ? 10000 : label === "30k" ? 30000 : 500000;
             const isActive = isAny

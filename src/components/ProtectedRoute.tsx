@@ -21,7 +21,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="w-10 h-10 animate-spin text-black" />
           <p className="text-[10px] font-black uppercase tracking-widest text-secondary">
-            Authenticating Session...
+            Mengautentikasi Sesi...
           </p>
         </div>
       </div>

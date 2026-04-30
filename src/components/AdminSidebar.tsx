@@ -8,18 +8,20 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 const navItems = [
-  { icon: Car, label: "Inventory", path: "/admin/inventory" },
-  { icon: CreditCard, label: "Transactions", path: "/admin/transactions" },
-  { icon: Truck, label: "Delivery", path: "/admin/delivery" },
-  { icon: Gavel, label: "Acquisitions", path: "/admin/acquisitions" },
-  { icon: Users, label: "Teams & RBAC", path: "/admin/rbac" },
+  { icon: Car, label: "Inventaris", path: "/admin/inventory" },
+  { icon: CreditCard, label: "Transaksi", path: "/admin/transactions" },
+  { icon: Truck, label: "Pengiriman", path: "/admin/delivery" },
+  { icon: Gavel, label: "Akuisisi", path: "/admin/acquisitions" },
+  { icon: Users, label: "Tim & RBAC", path: "/admin/rbac" },
 ];
 
 function AdminSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   return (
     <aside className="w-72 bg-white border-r border-gray-100 flex flex-col fixed inset-y-0 shadow-sm z-50">
@@ -28,15 +30,13 @@ function AdminSidebar() {
           className="flex items-center gap-3 mb-10 cursor-pointer"
           onClick={() => navigate("/admin/transactions")}
         >
-          <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center">
-            <TrendingUp className="w-6 h-6 text-white" />
-          </div>
+          <TrendingUp className="w-6 h-6 text-black" />
           <div>
             <h1 className="text-sm font-black uppercase tracking-tight">
               Admin
             </h1>
             <p className="text-[10px] text-secondary font-bold uppercase tracking-widest">
-              Unicorn Motors
+              Motora
             </p>
           </div>
         </div>
@@ -80,10 +80,10 @@ function AdminSidebar() {
             />
           </div>
           <div>
-            <p className="text-[11px] font-black">Alex Sterling</p>
-            <p className="text-[9px] text-secondary font-bold">
-              Senior Validator
+            <p className="text-[11px] font-black">
+              {user?.user_metadata.full_name}
             </p>
+            <p className="text-[9px] text-secondary font-bold">{user?.email}</p>
           </div>
         </div>
         <button

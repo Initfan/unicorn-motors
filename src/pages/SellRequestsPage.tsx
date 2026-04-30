@@ -9,7 +9,6 @@ import {
   DollarSign,
   ArrowRight,
   Download,
-  HelpCircle,
 } from "lucide-react";
 
 interface SellRequest {
@@ -62,38 +61,38 @@ function SellRequestsPage() {
     switch (status) {
       case "submitted":
         return {
-          label: "Under Review",
-          desc: "Admin is reviewing your details",
+          label: "Sedang Ditinjau",
+          desc: "Admin sedang meninjau detail Anda",
         };
       case "reviewed":
-        return { label: "Listing Validated", desc: "Initial check complete" };
+        return { label: "Listing Valid", desc: "Pemeriksaan awal selesai" };
       case "inspection":
         return {
-          label: "Field Inspection",
-          desc: "Our team is visiting your location",
+          label: "Pemeriksaan Lapangan",
+          desc: "Tim kami sedang mengunjungi lokasi Anda",
         };
       case "approved":
         return {
-          label: "Purchase Approved",
-          desc: "Unit accepted by Unicorn Motors",
+          label: "Pembelian Disetujui",
+          desc: "Unit diterima oleh Unicorn Motors",
         };
       case "payment":
         return {
-          label: "Processing Payment",
-          desc: "Funds are being transferred",
+          label: "Proses Pembayaran",
+          desc: "Dana sedang ditransfer",
         };
       case "completed":
         return {
-          label: "Deal Closed",
-          desc: "Transaction finalized & Success",
+          label: "Transaksi Selesai",
+          desc: "Transaksi telah selesai & sukses",
         };
       case "rejected":
         return {
-          label: "Rejected",
-          desc: "Unit does not meet our current criteria",
+          label: "Ditolak",
+          desc: "Unit tidak memenuhi kriteria kami saat ini",
         };
       default:
-        return { label: status.toUpperCase(), desc: "Status unknown" };
+        return { label: status.toUpperCase(), desc: "Status tidak diketahui" };
     }
   };
 
@@ -104,10 +103,10 @@ function SellRequestsPage() {
       <main className="max-w-[1200px] mx-auto w-full px-6 py-12">
         <header className="mb-12">
           <h1 className="text-4xl font-black tracking-tight mb-2">
-            My Car Offers
+            Tawaran Mobil Saya
           </h1>
           <p className="text-secondary font-medium uppercase tracking-widest text-[10px]">
-            Track your vehicle acquisition progress in real-time.
+            Lacak perkembangan akuisisi kendaraan Anda secara real-time.
           </p>
         </header>
 
@@ -120,15 +119,18 @@ function SellRequestsPage() {
             <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
               <Car className="w-10 h-10 text-gray-200" />
             </div>
-            <h2 className="text-xl font-black mb-2">No Sell Requests Yet</h2>
+            <h2 className="text-xl font-black mb-2">
+              Belum Ada Permintaan Jual
+            </h2>
             <p className="text-secondary text-sm mb-8">
-              Think about selling your premium vehicle? Get an offer now.
+              Berpikir untuk menjual kendaraan premium Anda? Dapatkan tawaran
+              sekarang.
             </p>
             <a
               href="/sell"
               className="px-8 py-4 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-xs inline-block hover:scale-[1.02] transition-transform shadow-xl"
             >
-              Start Selling My Car
+              Mulai Jual Mobil Saya
             </a>
           </div>
         ) : (
@@ -138,7 +140,7 @@ function SellRequestsPage() {
                 key={req.id}
                 className="bg-white rounded-[2.5rem] p-8 md:p-10 border border-gray-100 shadow-premium flex flex-col lg:flex-row gap-10"
               >
-                {/* Vehicle Quick Info */}
+                {/* Informasi Mobil */}
                 <div className="lg:w-72 shrink-0">
                   <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-gray-50 border border-gray-100 mb-4 group cursor-pointer">
                     <img
@@ -150,21 +152,18 @@ function SellRequestsPage() {
                   <h3 className="text-lg font-black leading-tight">
                     {req.car.year} {req.car.make} {req.car.model}
                   </h3>
-                  <div className="flex items-center gap-2 mt-2">
-                    <DollarSign className="w-3.5 h-3.5 text-secondary" />
-                    <span className="text-sm font-black text-black">
-                      Rp{req.asking_price.toLocaleString()}
-                    </span>
-                  </div>
+                  <span className="text-sm font-black text-black">
+                    Rp{req.asking_price.toLocaleString()}
+                  </span>
                 </div>
 
-                {/* Progress Tracking */}
+                {/* Progres Penanganan */}
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between mb-8">
                       <div>
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary mb-1">
-                          Current Stage
+                          Tahap Saat Ini
                         </p>
                         <h4 className="text-2xl font-black tracking-tight text-black flex items-center gap-2">
                           {getStatusDisplay(req.status).label}
@@ -178,7 +177,7 @@ function SellRequestsPage() {
                       </div>
                       <div className="text-right">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary mb-1">
-                          Request ID
+                          ID Permintaan
                         </p>
                         <p className="text-xs font-black">
                           #ACQ-{req.id.slice(0, 8).toUpperCase()}
@@ -186,7 +185,7 @@ function SellRequestsPage() {
                       </div>
                     </div>
 
-                    {/* Progress Bar Visual */}
+                    {/* Visual Progress Bar */}
                     {req.status !== "rejected" && (
                       <div className="relative pt-8 pb-4 ">
                         <div className="h-1 bg-gray-100 rounded-full w-full absolute top-1/2 -translate-y-1/2 hidden" />
@@ -198,12 +197,12 @@ function SellRequestsPage() {
                         />
                         <div className="relative flex justify-between mt-2">
                           {[
-                            "Offer",
-                            "Review",
-                            "Field",
-                            "Decision",
-                            "Payout",
-                            "Done",
+                            "Tawaran",
+                            "Tinjauan",
+                            "Lapangan",
+                            "Keputusan",
+                            "Pembayaran",
+                            "Selesai",
                           ].map((label, idx) => {
                             const isActive = getStatusStep(req.status) >= idx;
                             return (
@@ -234,18 +233,12 @@ function SellRequestsPage() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row items-center gap-4 mt-8 pt-8 border-t border-gray-50">
-                    {/* <button className="w-full sm:w-auto px-6 py-3 border border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-gray-50 transition-all">
-                      <HelpCircle className="w-3.5 h-3.5" /> Support Console
-                    </button> */}
                     {req.status === "completed" && (
                       <button className="w-full sm:w-auto px-6 py-3 bg-black text-white rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-lg">
-                        <Download className="w-3.5 h-3.5" /> Download Digital
-                        Kwitansi
+                        <Download className="w-3.5 h-3.5" /> Unduh Kwitansi
+                        Digital
                       </button>
                     )}
-                    <button className="ml-auto flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-secondary hover:text-black transition-colors">
-                      View Audit Log <ArrowRight className="w-3 h-3" />
-                    </button>
                   </div>
                 </div>
               </div>

@@ -88,28 +88,31 @@ function AdminAcquisitionsPage() {
   const getStatusInfo = (status: string) => {
     switch (status) {
       case "submitted":
-        return { label: "New Offer", color: "bg-amber-100 text-amber-700" };
+        return {
+          label: "Penawaran Baru",
+          color: "bg-amber-100 text-amber-700",
+        };
       case "reviewed":
-        return { label: "Reviewed", color: "bg-blue-100 text-blue-700" };
+        return { label: "Ditinjau", color: "bg-blue-100 text-blue-700" };
       case "inspection":
         return {
-          label: "In Inspection",
+          label: "Inspeksi",
           color: "bg-indigo-100 text-indigo-700",
         };
       case "approved":
         return {
-          label: "Purchase Approved",
+          label: "Pembelian Diterima",
           color: "bg-emerald-100 text-emerald-700",
         };
       case "payment":
         return {
-          label: "Payment Processing",
+          label: "Proses Pembayaran",
           color: "bg-purple-100 text-purple-700",
         };
       case "completed":
-        return { label: "Unit Acquired", color: "bg-green-600 text-white" };
+        return { label: "Unit Diperoleh", color: "bg-green-600 text-white" };
       case "rejected":
-        return { label: "Rejected", color: "bg-red-100 text-red-700" };
+        return { label: "Ditolak", color: "bg-red-100 text-red-700" };
       default:
         return {
           label: status.toUpperCase(),
@@ -126,10 +129,10 @@ function AdminAcquisitionsPage() {
         <header className="p-8 pb-0 flex items-center justify-between">
           <div>
             <h2 className="text-3xl font-black tracking-tight mb-2">
-              Vehicle Acquisitions
+              Akuisisi Kendaraan
             </h2>
             <p className="text-secondary text-sm font-medium">
-              Review and manage vehicles being sold to Unicorn Motors.
+              Meninjau dan mengelola kendaraan yang dijual ke Motora.
             </p>
           </div>
           {/* <div className="relative">
@@ -165,11 +168,11 @@ function AdminAcquisitionsPage() {
                 <table className="w-full text-left">
                   <thead>
                     <tr className="text-[10px] font-black uppercase tracking-widest text-secondary/40">
-                      <th className="px-6 py-4">Seller Details</th>
-                      <th className="px-6 py-4">Vehicle Unit</th>
-                      <th className="px-6 py-4">Asking Price</th>
-                      <th className="px-6 py-4">Current Status</th>
-                      <th className="px-6 py-4 text-right">Actions</th>
+                      <th className="px-6 py-4">Detail Penjual</th>
+                      <th className="px-6 py-4">Unit Kendaraan</th>
+                      <th className="px-6 py-4">Harga yang Diminta</th>
+                      <th className="px-6 py-4">Status Saat Ini</th>
+                      <th className="px-6 py-4 text-right">Aksi</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
@@ -188,7 +191,7 @@ function AdminAcquisitionsPage() {
                         <td colSpan={5} className="py-20 text-center">
                           <Eye className="w-12 h-12 text-gray-100 mx-auto mb-4" />
                           <p className="text-secondary font-bold text-xs uppercase tracking-widest">
-                            No acquisition requests found
+                            Tidak ada permintaan akuisisi
                           </p>
                         </td>
                       </tr>
@@ -226,7 +229,7 @@ function AdminAcquisitionsPage() {
                             </div>
                           </td>
                           <td className="px-6 py-6 font-black text-sm">
-                            ${req.asking_price.toLocaleString()}
+                            Rp.{req.asking_price.toLocaleString()}
                           </td>
                           <td className="px-6 py-6">
                             <span
@@ -263,7 +266,7 @@ function AdminAcquisitionsPage() {
                 <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-premium overflow-y-auto">
                   <div className="flex items-center justify-between mb-8">
                     <h3 className="text-xl font-black tracking-tight">
-                      Request Details
+                      Detail Permintaan
                     </h3>
                     <span className="p-2 bg-gray-50 rounded-lg text-secondary">
                       <FileText className="w-4 h-4" />
@@ -281,7 +284,7 @@ function AdminAcquisitionsPage() {
 
                     <div>
                       <p className="text-[10px] font-black uppercase tracking-widest text-secondary/40 mb-2">
-                        Seller Notes & Condition
+                        Catatan & Kondisi Penjual
                       </p>
                       <div className="bg-gray-50 rounded-2xl p-5 text-xs text-secondary font-medium leading-relaxed">
                         {selectedReq.condition_notes || "No notes provided."}
@@ -291,15 +294,15 @@ function AdminAcquisitionsPage() {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
                         <p className="text-[9px] font-black uppercase tracking-widest text-secondary mb-1">
-                          Asking Price
+                          Harga yang Diminta
                         </p>
                         <p className="text-lg font-black">
-                          ${selectedReq.asking_price.toLocaleString()}
+                          Rp.{selectedReq.asking_price.toLocaleString()}
                         </p>
                       </div>
                       <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
                         <p className="text-[9px] font-black uppercase tracking-widest text-secondary mb-1">
-                          Negotiable
+                          Negosiasi
                         </p>
                         <p className="text-lg font-black">
                           {selectedReq.negotiable ? "YES" : "NO"}
@@ -314,7 +317,7 @@ function AdminAcquisitionsPage() {
                           onClick={() => handleUpdateStatus("reviewed")}
                           className="w-full py-4 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:scale-[1.02] active:scale-95 transition-all shadow-xl"
                         >
-                          Mark as Reviewed
+                          Tinjau
                         </button>
                       )}
 
@@ -323,8 +326,8 @@ function AdminAcquisitionsPage() {
                           onClick={() => handleUpdateStatus("inspection")}
                           className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:scale-[1.02] active:scale-95 transition-all shadow-xl flex items-center justify-center gap-2"
                         >
-                          <Truck className="w-4 h-4" /> Schedule Field
-                          Inspection
+                          <Truck className="w-4 h-4" /> Jadwalkan Inspeksi
+                          Lapangan
                         </button>
                       )}
 
@@ -333,7 +336,8 @@ function AdminAcquisitionsPage() {
                           onClick={() => handleUpdateStatus("approved")}
                           className="w-full py-4 bg-emerald-600 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:scale-[1.02] active:scale-95 transition-all shadow-xl flex items-center justify-center gap-2"
                         >
-                          <CheckCircle2 className="w-4 h-4" /> Purchase Accepted
+                          <CheckCircle2 className="w-4 h-4" /> Pembelian
+                          Diterima
                         </button>
                       )}
 
@@ -342,8 +346,8 @@ function AdminAcquisitionsPage() {
                           onClick={() => handleUpdateStatus("payment")}
                           className="w-full py-4 bg-purple-600 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:scale-[1.02] active:scale-95 transition-all shadow-xl flex items-center justify-center gap-2"
                         >
-                          <DollarSign className="w-4 h-4" /> Process Payment to
-                          Seller
+                          <DollarSign className="w-4 h-4" /> Proses Pembayaran
+                          ke Penjual
                         </button>
                       )}
 
@@ -352,8 +356,8 @@ function AdminAcquisitionsPage() {
                           onClick={() => handleUpdateStatus("completed")}
                           className="w-full py-4 bg-green-600 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:scale-[1.02] active:scale-95 transition-all shadow-xl flex items-center justify-center gap-2"
                         >
-                          <Printer className="w-4 h-4" /> Generate官方 Kwitansi
-                          & Clear
+                          <Printer className="w-4 h-4" /> Generate Official
+                          Receipt & Clear
                         </button>
                       )}
 
@@ -365,49 +369,23 @@ function AdminAcquisitionsPage() {
                           onClick={() => handleUpdateStatus("rejected")}
                           className="w-full py-4 text-red-500 font-black uppercase tracking-widest text-[10px] hover:bg-red-50 rounded-2xl transition-all"
                         >
-                          Reject Listing
+                          Tolak
                         </button>
                       )}
 
                       {selectedReq.status === "completed" && (
                         <div className="space-y-3">
                           <button className="w-full py-4 bg-white border-2 border-black rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-2">
-                            <Printer className="w-4 h-4" /> Re-Print Kwitansi
+                            <Printer className="w-4 h-4" /> Cetak Ulang Kwitansi
                           </button>
                           <div className="bg-green-50 text-green-700 px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.1em] text-center">
-                            Transaction Finalized
+                            Transaksi Selesai
                           </div>
                         </div>
                       )}
                     </div>
                   </div>
                 </div>
-
-                {/* Seller Quick Info */}
-                {/* <div className="bg-black text-white rounded-[2rem] p-8">
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-4">
-                    Seller Contact
-                  </h4>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full border border-white/20 p-1 overflow-hidden">
-                      <img
-                        src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${selectedReq.seller_name}`}
-                        alt=""
-                      />
-                    </div>
-                    <div>
-                      <p className="font-black text-sm">
-                        {selectedReq.seller_name}
-                      </p>
-                      <p className="text-secondary text-[10px]">
-                        {selectedReq.seller_phone}
-                      </p>
-                    </div>
-                  </div>
-                  <button className="w-full mt-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">
-                    Open Direct Messenger
-                  </button>
-                </div> */}
               </motion.aside>
             )}
           </AnimatePresence>
