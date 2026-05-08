@@ -9,7 +9,6 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,8 +18,8 @@ function LoginPage() {
       email,
       password,
     });
-    if (error) setError(error.message);
-    else navigate("/");
+    if (error) return setError(error.message);
+    window.location.href = "/";
     setLoading(false);
   };
 
