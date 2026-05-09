@@ -5,13 +5,17 @@ export interface Car {
   year: number;
   price: number;
   mileage: number;
-  fuelType: "Electric" | "Hybrid" | "Petrol" | "Diesel";
-  bodyType: "Sedan" | "SUV" | "Coupe" | "Convertible";
-  imageUrl: string;
-  isNewArrival?: boolean;
-  isCertified?: boolean;
-  isEditorsChoice?: boolean;
+  fuel_type: "Electric" | "Hybrid" | "Petrol" | "Diesel";
+  body_type: "Sedan" | "SUV" | "Coupe" | "Convertible";
+  image_url: string;
+  vin: string;
+  is_new_arrival?: boolean;
+  is_certified?: boolean;
+  is_editro_choice?: boolean;
   description?: string;
+  stock: number;
+  certified_stnk: boolean;
+  certified_bpkb: boolean;
 }
 
 export type FilterState = {

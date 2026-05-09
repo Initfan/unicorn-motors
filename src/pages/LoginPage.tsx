@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { supabase } from "../supabase";
-import { ArrowLeft, Mail, Lock, Loader2, Sparkles } from "lucide-react";
+import { ArrowLeft, Mail, Lock, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 function LoginPage() {
@@ -18,9 +18,9 @@ function LoginPage() {
       email,
       password,
     });
+    setLoading(false);
     if (error) return setError(error.message);
     window.location.href = "/";
-    setLoading(false);
   };
 
   return (
@@ -142,14 +142,6 @@ function LoginPage() {
                 Daftar gratis
               </Link>
             </p>
-          </div>
-
-          {/* Trust Batch */}
-          <div className="pt-12 flex items-center justify-center gap-8 opacity-40 grayscale pointer-events-none">
-            <Sparkles className="w-6 h-6" />
-            <span className="text-[10px] uppercase font-black tracking-widest">
-              Secured by Unicorn Auth
-            </span>
           </div>
         </div>
       </div>

@@ -12,16 +12,16 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
     <div className="group bg-white rounded-3xl overflow-hidden border border-gray-100 hover:shadow-premium transition-all">
       <div className="relative aspect-[4/3] overflow-hidden">
         <img
-          src={car.imageUrl}
+          src={car.image_url}
           alt={`${car.make} ${car.model}`}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
-        {car.isNewArrival && (
+        {car.is_new_arrival && (
           <span className="absolute top-4 left-4 bg-black text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
             Baru Tiba
           </span>
         )}
-        {car.isCertified && (
+        {car.is_certified && (
           <span className="absolute top-4 left-4 bg-white text-black text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
             Bersertifikat
           </span>
@@ -44,7 +44,7 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
           </div>
           <div className="flex items-center gap-1.5">
             <Zap className="w-3.5 h-3.5" />
-            <span>{car.fuelType}</span>
+            <span>{car.fuel_type}</span>
           </div>
         </div>
 

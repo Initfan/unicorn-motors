@@ -73,11 +73,10 @@ function RegisterPage() {
       <div className="flex items-center justify-center p-8 bg-white">
         <div className="w-full max-w-md space-y-12">
           <div className="space-y-4">
-            <h2 className="text-4xl font-black tracking-tight">
-              Buat Akun
-            </h2>
+            <h2 className="text-4xl font-black tracking-tight">Buat Akun</h2>
             <p className="text-secondary font-medium">
-              Bergabunglah dengan Unicorn Motors dan mulai perjalanan Anda hari ini.
+              Bergabunglah dengan Unicorn Motors dan mulai perjalanan Anda hari
+              ini.
             </p>
           </div>
 
@@ -159,13 +158,6 @@ function RegisterPage() {
                 Masuk
               </Link>
             </p>
-          </div>
-
-          <div className="pt-12 flex items-center justify-center gap-8 opacity-40 grayscale pointer-events-none">
-            <Sparkles className="w-6 h-6" />
-            <span className="text-[10px] uppercase font-black tracking-widest">
-              Secured by Unicorn Auth
-            </span>
           </div>
         </div>
       </div>

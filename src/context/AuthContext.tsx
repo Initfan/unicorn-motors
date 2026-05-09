@@ -34,23 +34,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           .select("role")
           .eq("email", currentUser.email)
           .single();
+        console.log(data.role);
         setRole(data.role ?? "buyer");
       })
       .finally(() => setLoading(false));
 
     // Listen for changes on auth state (logged in, signed out, etc.)
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      const currentUser = session?.user ?? null;
-      setUser(currentUser);
-      setRole(
-        currentUser?.user_metadata?.role ?? (currentUser ? "buyer" : null),
-      );
-      setLoading(false);
-    });
+    // const {
+    //   data: { subscription },
+    // } = supabase.auth.onAuthStateChange((_event, session) => {
+    //   const currentUser = session?.user ?? null;
+    //   setUser(currentUser);
+    //   setRole(
+    //     currentUser?.user_metadata?.role ?? (currentUser ? "buyer" : null),
+    //   );
+    //   setLoading(false);
+    // });
 
-    return () => subscription.unsubscribe();
+    // return () => subscription.unsubscribe();
   }, []);
 
   const signOut = async () => {

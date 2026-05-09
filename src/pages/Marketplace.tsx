@@ -43,26 +43,13 @@ function Marketplace() {
 
       const { data, error } = await query;
 
-      if (error) {
-        console.error("Terjadi kesalahan saat mengambil data mobil:", error);
-      } else if (data) {
-        const formattedCars: Car[] = data.map((item: any) => ({
-          id: item.id,
-          make: item.make,
-          model: item.model,
-          year: item.year,
-          price: item.price,
-          mileage: item.mileage,
-          fuelType: item.fuel_type,
-          bodyType: item.body_type,
-          imageUrl: item.image_url,
-          isNewArrival: item.is_new_arrival,
-          isCertified: item.is_certified,
-          isEditorsChoice: item.is_editors_choice,
-          description: item.description,
-        }));
-        setCars(formattedCars);
-      }
+      if (error)
+        return console.error(
+          "Terjadi kesalahan saat mengambil data mobil:",
+          error,
+        );
+
+      setCars(data);
       setLoading(false);
     }
 

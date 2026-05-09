@@ -4,16 +4,18 @@ import AdminSidebar from "../components/AdminSidebar";
 import {
   Car as CarIcon,
   Search,
-  Filter,
-  Download,
   ShieldCheck,
   ChevronRight,
+  Edit2,
 } from "lucide-react";
 import type { Car } from "../types";
+import UpdateInventoryModal from "../components/UpdateStock";
 
 function AdminInventoryPage() {
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editCar, setEditCar] = useState<Car>(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     async function fetchInventory() {
@@ -23,26 +25,10 @@ function AdminInventoryPage() {
         .select("*")
         .order("created_at", { ascending: false });
 
-      if (error) {
-        console.error("Error fetching inventory:", error);
-      } else if (data) {
-        const formattedCars = data.map((c: any) => ({
-          id: c.id,
-          make: c.make,
-          model: c.model,
-          year: c.year,
-          price: c.price,
-          mileage: c.mileage,
-          fuelType: c.fuel_type,
-          bodyType: c.body_type,
-          imageUrl: c.image_url,
-          isNewArrival: c.is_new_arrival,
-          isCertified: c.is_certified,
-          isEditorsChoice: c.is_editors_choice,
-          description: c.description,
-        }));
-        setCars(formattedCars);
-      }
+      if (error) return console.error("Error fetching inventory:", error);
+
+      setCars(data);
+
       setLoading(false);
     }
 
@@ -52,6 +38,12 @@ function AdminInventoryPage() {
   return (
     <div className="min-h-screen bg-[#F3F4F6] flex font-sans">
       <AdminSidebar />
+
+      <UpdateInventoryModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        car={editCar}
+      />
 
       {/* Main Content Area */}
       <main className="flex-1 ml-72 p-8 flex flex-col min-w-0">
@@ -65,14 +57,6 @@ function AdminInventoryPage() {
               wilayah.
             </p>
           </div>
-          {/* <div className="flex gap-4">
-            <button className="px-6 py-2.5 bg-white border border-gray-100 rounded-xl font-bold text-[10px] text-secondary uppercase tracking-widest flex items-center gap-2 hover:bg-gray-50 transition-colors">
-              <Filter className="w-3.5 h-3.5" /> Filter
-            </button>
-            <button className="px-6 py-2.5 bg-white border border-gray-100 rounded-xl font-bold text-[10px] text-secondary uppercase tracking-widest flex items-center gap-2 hover:bg-gray-50 transition-colors">
-              <Download className="w-3.5 h-3.5" /> Ekspor CSV
-            </button>
-          </div> */}
         </header>
 
         {/* Stats Grid */}
@@ -84,19 +68,6 @@ function AdminInventoryPage() {
             trend="+4.2%"
             trendUp
           />
-          {/* <StatCard
-            icon={FileText}
-            label="Dokumen Tertunda"
-            value="84"
-            urgent
-            label2="Memerlukan verifikasi STNK/BPKB"
-          />
-          <StatCard
-            icon={Settings}
-            label="Dalam Perawatan"
-            value="32"
-            label2="Perkiraan pemulihan: 3.2 hari"
-          /> */}
           <StatCard
             icon={ShieldCheck}
             label="Tersedia untuk Dijual"
@@ -112,7 +83,7 @@ function AdminInventoryPage() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary/40" />
               <input
                 type="text"
-                placeholder="Cari Nama Kendaraan, VIN atau Model..."
+                placeholder="Cari Nama Kendaraan, Plat atau Model..."
                 className="w-full pl-12 pr-6 py-3 bg-gray-50/50 rounded-2xl text-sm focus:ring-2 focus:ring-black outline-none transition-all font-medium"
               />
             </div>
@@ -137,10 +108,10 @@ function AdminInventoryPage() {
               <thead>
                 <tr className="text-[10px] font-black uppercase tracking-widest text-secondary/40">
                   <th className="px-8 py-4">Nama Kendaraan</th>
-                  <th className="px-8 py-4">Nomor VIN</th>
-                  <th className="px-8 py-4">Level Stok</th>
+                  <th className="px-8 py-4">Nomor Rangka</th>
+                  <th className="px-8 py-4">Stok</th>
                   <th className="px-8 py-4">Status Dokumen</th>
-                  {/* <th className="px-8 py-4 text-right">Aksi</th> */}
+                  <th className="px-8 py-4 text-right">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -163,7 +134,7 @@ function AdminInventoryPage() {
                           <div className="flex items-center gap-4">
                             <div className="w-16 h-12 bg-gray-100 rounded-xl overflow-hidden shadow-sm flex-shrink-0">
                               <img
-                                src={car.imageUrl}
+                                src={car.image_url}
                                 alt={car.model}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                               />
@@ -173,57 +144,51 @@ function AdminInventoryPage() {
                                 {car.year} {car.make} {car.model}
                               </p>
                               <p className="text-[10px] text-secondary font-bold uppercase tracking-tight mt-1">
-                                {car.bodyType} • {car.fuelType}
+                                {car.body_type} • {car.fuel_type}
                               </p>
                             </div>
                           </div>
                         </td>
                         <td className="px-8 py-6">
                           <span className="px-3 py-1.5 bg-gray-100 rounded text-[9px] font-mono font-bold text-secondary uppercase tracking-widest">
-                            {Math.random()
-                              .toString(36)
-                              .substring(2, 10)
-                              .toUpperCase()}
-                            XXXXXX
+                            {car.vin}
                           </span>
                         </td>
                         <td className="px-8 py-6">
                           <div className="flex items-center gap-4">
                             <span className="text-sm font-black w-4">
-                              {/* {Math.floor(Math.random() * 15)} */}1
+                              {car.stock}
                             </span>
-                            <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                              <div
-                                className="h-full bg-black rounded-full"
-                                // style={{ width: `${Math.random() * 80 + 20}%` }}
-                                style={{ width: `100%` }}
-                              />
-                            </div>
                           </div>
                         </td>
                         <td className="px-8 py-6">
                           <div className="flex gap-2">
-                            <span className="px-2 py-1 bg-green-50 text-green-600 rounded-md text-[8px] font-black uppercase tracking-widest flex items-center gap-1 border border-green-100">
-                              STNK Valid
+                            <span
+                              className={`px-2 py-1 bg-green-50 text-green-600 rounded-md text-[8px] font-black uppercase tracking-widest flex items-center gap-1 border border-green-100 ${car.certified_stnk ? "bg-red-50 text-red-600" : "bg-blue-50 text-blue-600"}`}
+                            >
+                              STNK{" "}
+                              {car.certified_stnk ? "Valid" : "Tidak Valid"}
                             </span>
-                            <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded-md text-[8px] font-black uppercase tracking-widest flex items-center gap-1 border border-blue-100">
-                              BPKB Tersedia
+                            <span
+                              className={`px-2 py-1 rounded-md text-[8px] font-black uppercase tracking-widest flex items-center gap-1 border border-blue-100 ${car.certified_bpkb ? "bg-red-50 text-red-600" : "bg-blue-50 text-blue-600"}`}
+                            >
+                              BPKB{" "}
+                              {car.certified_bpkb
+                                ? "Tersedia"
+                                : "Tidak Tersedia"}
                             </span>
                           </div>
                         </td>
-                        {/* <td className="px-8 py-6 text-right">
+                        <td className="px-8 py-6 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                            <button
+                              onClick={() => (setEditCar(car), setOpen(true))}
+                              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                            >
                               <Edit2 className="w-4 h-4 text-secondary/60" />
                             </button>
-                            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                              <Eye className="w-4 h-4 text-secondary/60" />
-                            </button>
-                            <button className="px-4 py-2 bg-black text-white rounded-lg text-[9px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all">
-                              Perbarui Dokumen
-                            </button>
                           </div>
-                        </td> */}
+                        </td>
                       </tr>
                     ))}
               </tbody>

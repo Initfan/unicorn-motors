@@ -50,26 +50,10 @@ function BookingPage() {
         .eq("id", id)
         .single();
 
-      if (error) {
-        console.error("Error fetching car:", error);
-      } else if (data) {
-        setCar({
-          id: data.id,
-          make: data.make,
-          model: data.model,
-          year: data.year,
-          price: data.price,
-          mileage: data.mileage,
-          fuelType: data.fuel_type,
-          bodyType: data.body_type,
-          imageUrl: data.image_url,
-          isNewArrival: data.is_new_arrival,
-          isCertified: data.is_certified,
-          isEditorsChoice: data.is_editors_choice,
-          description: data.description,
-        });
-      }
       setLoading(false);
+
+      if (error) return console.error("Error fetching car:", error);
+      setCar(data);
     }
 
     fetchCar();
@@ -485,7 +469,7 @@ function BookingPage() {
               <div className="bg-white p-4 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-6">
                 <div className="w-32 h-24 rounded-2xl overflow-hidden shadow-sm flex-shrink-0">
                   <img
-                    src={car.imageUrl}
+                    src={car.image_url}
                     alt={car.model}
                     className="w-full h-full object-cover"
                   />

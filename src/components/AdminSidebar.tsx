@@ -21,7 +21,7 @@ const navItems = [
 function AdminSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
 
   return (
     <aside className="w-72 bg-white border-r border-gray-100 flex flex-col fixed inset-y-0 shadow-sm z-50">
@@ -87,7 +87,7 @@ function AdminSidebar() {
           </div>
         </div>
         <button
-          onClick={() => navigate("/")}
+          onClick={signOut}
           className="text-secondary hover:text-red-500 transition-colors"
         >
           <LogOut className="w-4 h-4" />
