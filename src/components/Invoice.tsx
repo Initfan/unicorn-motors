@@ -1,31 +1,37 @@
 import React, { useEffect, useState, useTransition } from "react";
 import { supabase } from "../supabase";
 import { useParams } from "react-router-dom";
-import type { Booking, Car } from "../types";
+import type { Booking } from "../types";
+import { Loader2 } from "lucide-react";
 
 type Invoice = Pick<
   Booking,
-  "car_id" | "full_name" | "phone" | "address" | "cars"
+  "car_id" | "full_name" | "phone" | "address" | "cars" | "created_at"
 >;
 
 const Invoice: React.FC = () => {
   const { id } = useParams();
-  const [booking, setBooking] = useState<Invoice>(null);
-  const [pending, transition] = useTransition();
+  const [booking, setBooking] = useState<Invoice>();
+  const [_, transition] = useTransition();
 
   useEffect(() => {
     transition(
       async () =>
         await supabase
           .from("bookings")
-          .select("car_id, full_name, phone, address, cars(*)")
+          .select("id, car_id, full_name, phone, address, created_at, cars(*)")
           .eq("id", id)
           .single()
-          .then((v) => setBooking({ ...v.data, cars: v.data.cars[0] as Car })),
+          .then((v) => setBooking(v.data)),
     );
   }, []);
 
-  if (pending) return;
+  if (!booking)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader2 className="animate-spin text-3xl" />
+      </div>
+    );
 
   return (
     <div className="min-h-screen bg-gray-100 p-8 flex justify-center font-sans">
@@ -41,9 +47,11 @@ const Invoice: React.FC = () => {
           <div>
             <h2 className="font-bold text-sm mb-1">Tagihan ke:</h2>
             <div className="text-[13px] leading-relaxed text-gray-700">
-              <p className="font-semibold text-gray-900">{booking.full_name}</p>
-              <p>{booking.phone},</p>
-              <p>Location, {booking.address},</p>
+              <p className="font-semibold text-gray-900">
+                {booking?.full_name}
+              </p>
+              <p>{booking?.phone},</p>
+              <p>Location, {booking?.address},</p>
               <p>570xx59x</p>
             </div>
           </div>
@@ -52,7 +60,9 @@ const Invoice: React.FC = () => {
               <span className="font-bold">Invoice #</span>
               <span className="text-gray-600 text-right">52148</span>
               <span className="font-bold">Date</span>
-              <span className="text-gray-600 text-right">01 / 02 / 2020</span>
+              <span className="text-gray-600 text-right">
+                {booking.created_at.toLocaleDateString("id-ID")}
+              </span>
             </div>
           </div>
         </div>
@@ -76,7 +86,7 @@ const Invoice: React.FC = () => {
               >
                 <td className="py-4 px-4 text-gray-800">1</td>
                 <td className="py-4 px-4 text-gray-800">
-                  {booking?.cars?.make} - {booking.cars.model}
+                  {booking?.cars?.make} - {booking?.cars?.model}
                 </td>
                 <td className="py-4 px-4 text-right text-gray-800">
                   {Number(booking?.cars?.price.toFixed(2)).toLocaleString(
@@ -113,14 +123,14 @@ const Invoice: React.FC = () => {
           <div className="w-1/3">
             <div className="flex justify-between text-xs mb-2 px-4">
               <span className="font-semibold">Subtotal</span>
-              <span>{booking.cars.price.toLocaleString("id-ID")}</span>
+              <span>{booking?.cars?.price.toLocaleString("id-ID")}</span>
             </div>
             <div className="bg-gray-200 flex justify-between items-center py-3 px-4">
               <span className="font-bold text-sm tracking-widest uppercase">
                 Total
               </span>
               <span className="font-bold text-lg">
-                {booking.cars.price.toLocaleString("id-ID")}
+                {booking?.cars?.price.toLocaleString("id-ID")}
               </span>
             </div>
           </div>

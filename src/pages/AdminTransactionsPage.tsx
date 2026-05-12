@@ -4,7 +4,6 @@ import AdminSidebar from "../components/AdminSidebar";
 import {
   CreditCard,
   Plus,
-  TrendingUp,
   Gavel,
   Clock,
   CheckCircle2,
@@ -84,8 +83,7 @@ function AdminTransactionsPage() {
     let nextStatus = "verified";
     if (selectedTxn.status === "dp_paid") nextStatus = "verified_dp";
     if (selectedTxn.status === "verified_dp") nextStatus = "processing_docs";
-    if (selectedTxn.status === "ready_for_pickup")
-      nextStatus = "request_delivery";
+    if (selectedTxn.status === "ready_for_pickup") nextStatus = "completed";
 
     const { error } = await supabase
       .from("bookings")
@@ -443,6 +441,7 @@ function AdminTransactionsPage() {
                       "dp_paid",
                       "verified_dp",
                       "ready_for_pickup",
+                      "ready_for_delivery",
                     ].includes(selectedTxn.status) ? (
                       <button
                         onClick={handleApprove}
@@ -451,10 +450,12 @@ function AdminTransactionsPage() {
                         {selectedTxn.status === "verified_dp"
                           ? "Proses STNK & BPKB"
                           : selectedTxn.status === "ready_for_pickup"
-                            ? "Buat surat jalan"
-                            : selectedTxn.status === "dp_paid"
-                              ? "Verifikasi Identitas & DP"
-                              : "Verifikasi Biaya Booking"}
+                            ? "Cetak Invoice"
+                            : selectedTxn.status === "ready_for_delivery"
+                              ? "Buat surat jalan"
+                              : selectedTxn.status === "dp_paid"
+                                ? "Verifikasi Identitas & DP"
+                                : "Verifikasi Biaya Booking"}
                       </button>
                     ) : (
                       <div className="w-full py-5 bg-green-50 text-green-700 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 border border-green-100">

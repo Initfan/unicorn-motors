@@ -33,6 +33,7 @@ export interface Booking {
   full_payment_url?: string;
   handover_method?: string;
   cars?: Car;
+  created_at: Date;
 }
 
 export type FilterState = {
