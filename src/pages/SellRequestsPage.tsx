@@ -2,14 +2,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "../supabase";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
-import {
-  Car,
-  CheckCircle2,
-  Loader2,
-  DollarSign,
-  ArrowRight,
-  Download,
-} from "lucide-react";
+import { Car, CheckCircle2, Loader2, Download } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface SellRequest {
   id: string;
@@ -17,6 +11,7 @@ interface SellRequest {
   asking_price: number;
   created_at: string;
   car: {
+    id: string;
     make: string;
     model: string;
     year: number;
@@ -234,10 +229,13 @@ function SellRequestsPage() {
 
                   <div className="flex flex-col sm:flex-row items-center gap-4 mt-8 pt-8 border-t border-gray-50">
                     {req.status === "completed" && (
-                      <button className="w-full sm:w-auto px-6 py-3 bg-black text-white rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-lg">
+                      <Link
+                        to={`/receipt/${req.id}`}
+                        className="w-full sm:w-auto px-6 py-3 bg-black text-white rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-lg"
+                      >
                         <Download className="w-3.5 h-3.5" /> Unduh Kwitansi
                         Digital
-                      </button>
+                      </Link>
                     )}
                   </div>
                 </div>

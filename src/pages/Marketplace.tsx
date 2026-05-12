@@ -23,6 +23,7 @@ function Marketplace() {
         .from("cars")
         .select("*")
         .eq("is_sold", false)
+        .eq("is_auction", false)
         .order("created_at", { ascending: false });
 
       if (filters.bodyType) {

@@ -16,6 +16,7 @@ import AdminRBACPage from "./pages/AdminRBACPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SellRequestsPage from "./pages/SellRequestsPage";
 import Invoice from "./components/Invoice";
+import PaymentReceipt from "./components/Receipt";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
 
         <Route path="/invoice/:id" element={<Invoice />} />
+        <Route path="/receipt/:id" element={<PaymentReceipt />} />
 
         <Route
           path="/booking/:id"

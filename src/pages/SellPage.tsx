@@ -12,6 +12,10 @@ import {
   Loader2,
   X,
 } from "lucide-react";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { sellSchema, type sellSchemaType } from "../utils/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const SELL_STEPS = [
   { id: "media", label: "Media & Foto", icon: Camera },
@@ -25,22 +29,16 @@ function SellPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [activeStep, setActiveStep] = useState("media");
-  const [submitting, setSubmitting] = useState(false);
   const [photos, setPhotos] = useState<File[]>([]);
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
-  const [formData, setFormData] = useState({
-    vin: "",
-    year: "2024",
-    make: "",
-    model: "",
-    trim: "",
-    mileage: "",
-    fuelType: "Petrol",
-    bodyType: "Sedan",
-    narrative: "",
-    price: "",
-    negotiable: "Negotiable",
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+    watch,
+  } = useForm<sellSchemaType>({
+    resolver: zodResolver(sellSchema),
   });
 
   const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,70 +89,61 @@ function SellPage() {
     return publicUrl;
   };
 
-  const handleSubmit = async () => {
+  const onSubmit = async (data: sellSchemaType) => {
     if (!user) {
-      alert("Silahkan login terlebih dahulu untuk mengirimkan listing.");
+      toast.error("Silahkan login terlebih dahulu untuk mengirimkan listing.");
       navigate("/login");
       return;
     }
 
-    setSubmitting(true);
     try {
       const mainImageUrl = await uploadPhotos();
 
       if (!mainImageUrl) {
-        alert("Silahkan unggah minimal 1 foto.");
-        setSubmitting(false);
+        toast.error("Silahkan unggah minimal 1 foto.");
         return;
       }
 
-      // 1. Insert car data
-      const { data: carData, error: carError } = await supabase
+      const { data: car, error: carError } = await supabase
         .from("cars")
-        .insert([
-          {
-            vin: formData.vin,
-            make: formData.make || formData.model.split(" ")[0] || "Unknown",
-            model: formData.model,
-            year: parseInt(formData.year),
-            price: parseFloat(formData.price),
-            mileage: parseInt(formData.mileage.replace(/,/g, "")),
-            fuel_type: formData.fuelType,
-            body_type: formData.bodyType || "Sedan",
-            image_url: mainImageUrl,
-            description: formData.narrative,
-          },
-        ])
+        .insert({
+          make: data.make,
+          model: data.model,
+          body_type: data.body_type,
+          year: data.year,
+          price: data.price,
+          mileage: data.mileage,
+          fuel_type: data.fuel_type,
+          image_url: mainImageUrl,
+          description: data.description,
+          vin: data.vin,
+          is_auction: true,
+        })
         .select()
         .single();
 
       if (carError) throw carError;
 
-      // 2. Create sell request for admin review
-      const { error: sellError } = await supabase.from("sell_requests").insert([
-        {
-          car_id: carData.id,
-          seller_id: user.id,
-          seller_name: user.user_metadata?.full_name || user.email,
-          seller_phone: user.user_metadata?.phone || "",
-          asking_price: parseFloat(formData.price),
-          condition_notes: formData.narrative,
-          negotiable: formData.negotiable === "Negotiable",
-          status: "submitted",
-        },
-      ]);
+      const { error: sellError } = await supabase.from("sell_requests").insert({
+        car_id: car.id,
+        seller_id: user.id,
+        seller_name: data.seller_name,
+        seller_phone: data.seller_phone,
+        asking_price: data.price,
+        condition_notes: data.description,
+        negotiable: data.negotiable == "nego" ? true : false,
+        payment_method: data.payment_method,
+        status: "submitted",
+      });
 
       if (sellError) throw sellError;
 
-      alert(
+      toast.success(
         "Kendaraan Anda telah berhasil dikirim untuk ditinjau! Lacak kemajuan di dasbor Anda.",
       );
       navigate("/sell/requests");
     } catch (error: any) {
-      console.error(error);
-      alert("Error submitting listing: " + error.message);
-    } finally {
-      setSubmitting(false);
+      toast.error("Error submitting listing: " + error.message);
     }
   };
 
@@ -198,8 +187,10 @@ function SellPage() {
           </div>
         </aside>
 
-        {/* Form Content */}
-        <main className="flex-1 space-y-8 max-w-4xl pb-32">
+        <form
+          className="flex-1 space-y-8 max-w-4xl pb-32"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {/* Section: Media */}
           <section
             id="media"
@@ -216,7 +207,7 @@ function SellPage() {
             <div className="space-y-6">
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-gray-100 rounded-[2rem] p-12 text-center bg-gray-50/50 hover:bg-gray-50 transition-colors cursor-pointer group"
+                className="border-2 border-dashed border-gray-100 rounded-[2rem] p-12 text-center bg-gray-50/50 hover:bg-gray-50 transition-colors cursor-pointer group relative"
               >
                 <input
                   type="file"
@@ -290,21 +281,39 @@ function SellPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2 col-span-1">
-                <label className="text-xs font-black uppercase tracking-widest text-gray-500 flex items-center gap-1.5">
-                  Nomor Rangka{" "}
-                  <MessageSquare className="w-3 h-3 cursor-help text-blue-500" />
+                <label className="text-xs font-black uppercase tracking-widest text-gray-500">
+                  Merek & Model
                 </label>
-                <input
-                  type="text"
-                  placeholder="B123ABC..."
-                  className="w-full px-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all"
-                  value={formData.vin}
-                  onChange={(e) =>
-                    setFormData({ ...formData, vin: e.target.value })
-                  }
-                />
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <input
+                      type="text"
+                      {...register("make")}
+                      placeholder="e.g. Porsche"
+                      className="w-full px-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all"
+                    />
+                    {errors.make && (
+                      <p className="text-xs text-red-500">
+                        {errors.make.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="space-y-1">
+                    <input
+                      type="text"
+                      placeholder="e.g. 911"
+                      {...register("model")}
+                      className="w-full px-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all"
+                    />
+                    {errors.model && (
+                      <p className="text-xs text-red-500">
+                        {errors.model.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2 col-span-1">
                   <label className="text-xs font-black uppercase tracking-widest text-gray-500">
                     Tahun
@@ -313,26 +322,48 @@ function SellPage() {
                     type="text"
                     placeholder="2024"
                     className="w-full px-4 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all"
-                    value={formData.year}
-                    onChange={(e) =>
-                      setFormData({ ...formData, year: e.target.value })
-                    }
+                    {...register("year")}
                   />
+                  {errors.year && (
+                    <p className="text-xs text-red-500">
+                      {errors.year.message}
+                    </p>
+                  )}
                 </div>
-                <div className="space-y-2 col-span-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-gray-500">
-                    Merek & Model
+                <div className="space-y-2 col-span-1">
+                  <label className="text-xs font-black uppercase tracking-widest text-gray-500 flex items-center gap-1.5">
+                    Nomor Rangka{" "}
+                    <MessageSquare className="w-3 h-3 cursor-help text-blue-500" />
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Porsche 911"
+                    placeholder="e.g XH313"
+                    {...register("vin")}
                     className="w-full px-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all"
-                    value={formData.model}
-                    onChange={(e) =>
-                      setFormData({ ...formData, model: e.target.value })
-                    }
                   />
+                  {errors.vin && (
+                    <p className="text-xs text-red-500">{errors.vin.message}</p>
+                  )}
                 </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest text-gray-500">
+                  Tipe Body
+                </label>
+                <select
+                  className="w-full px-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all appearance-none"
+                  {...register("body_type")}
+                >
+                  <option>SUV</option>
+                  <option>Sedan</option>
+                  <option>Coupe</option>
+                  <option>Convertible</option>
+                </select>
+                {errors.fuel_type && (
+                  <p className="text-xs text-red-500">
+                    {errors.fuel_type.message}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-black uppercase tracking-widest text-gray-500">
@@ -340,16 +371,18 @@ function SellPage() {
                 </label>
                 <select
                   className="w-full px-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all appearance-none"
-                  value={formData.fuelType}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fuelType: e.target.value })
-                  }
+                  {...register("fuel_type")}
                 >
                   <option>Petrol</option>
                   <option>Diesel</option>
                   <option>Electric</option>
                   <option>Hybrid</option>
                 </select>
+                {errors.fuel_type && (
+                  <p className="text-xs text-red-500">
+                    {errors.fuel_type.message}
+                  </p>
+                )}
               </div>
               <div className="space-y-2 relative">
                 <label className="text-xs font-black uppercase tracking-widest text-gray-500">
@@ -360,14 +393,16 @@ function SellPage() {
                     type="text"
                     placeholder="1,200"
                     className="w-full px-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all"
-                    value={formData.mileage}
-                    onChange={(e) =>
-                      setFormData({ ...formData, mileage: e.target.value })
-                    }
+                    {...register("mileage")}
                   />
                   <span className="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase text-gray-400">
                     Jarak Tempuh
                   </span>
+                  {errors.mileage && (
+                    <p className="text-xs text-red-500">
+                      {errors.mileage.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="space-y-2 col-span-full">
@@ -377,11 +412,13 @@ function SellPage() {
                 <textarea
                   placeholder="Tell the story of your car. Mention modifications, service records, and standout features..."
                   className="w-full px-6 py-6 bg-gray-50 border-none rounded-3xl focus:ring-2 focus:ring-black transition-all h-32 resize-none"
-                  value={formData.narrative}
-                  onChange={(e) =>
-                    setFormData({ ...formData, narrative: e.target.value })
-                  }
+                  {...register("description")}
                 />
+                {errors.description && (
+                  <p className="text-xs text-red-500">
+                    {errors.description.message}
+                  </p>
+                )}
               </div>
             </div>
           </section>
@@ -399,6 +436,24 @@ function SellPage() {
             </div>
 
             <div className="space-y-8">
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest text-gray-500">
+                  No Telepon
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="w-full pl-12 pr-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all font-bold text-xl"
+                    {...register("seller_phone")}
+                  />
+                </div>
+                {errors.seller_phone && (
+                  <p className="text-xs text-red-500">
+                    {errors.seller_phone.message}
+                  </p>
+                )}
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-2">
                   <label className="text-xs font-black uppercase tracking-widest text-gray-500">
@@ -412,12 +467,14 @@ function SellPage() {
                       type="text"
                       placeholder="0.00"
                       className="w-full pl-12 pr-6 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-black transition-all font-bold text-xl"
-                      value={formData.price}
-                      onChange={(e) =>
-                        setFormData({ ...formData, price: e.target.value })
-                      }
+                      {...register("price")}
                     />
                   </div>
+                  {errors.price && (
+                    <p className="text-xs text-red-500">
+                      {errors.price.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-4">
@@ -425,25 +482,56 @@ function SellPage() {
                     Negosiasi
                   </label>
                   <div className="flex gap-4">
-                    {["Tetap", "Nego"].map((type) => (
+                    {["tetap", "nego"].map((type) => (
                       <label
                         key={type}
-                        className={`flex-1 flex items-center justify-center gap-2 px-5 py-4 rounded-2xl cursor-pointer transition-all border ${formData.negotiable === type ? "bg-black text-white border-black" : "bg-gray-50 text-secondary border-transparent hover:bg-gray-100"}`}
+                        className={`capitalize flex-1 flex items-center justify-center gap-2 px-5 py-4 rounded-2xl cursor-pointer transition-all border ${watch("negotiable") === type ? "bg-black text-white border-black" : "bg-gray-50 text-secondary border-transparent hover:bg-gray-100"}`}
                       >
                         <input
                           type="radio"
                           name="negotiability"
                           className="sr-only"
-                          checked={formData.negotiable === type}
-                          onChange={() =>
-                            setFormData({ ...formData, negotiable: type })
-                          }
+                          value={type}
+                          {...register("negotiable")}
                         />
                         <span className="text-sm font-bold">{type}</span>
                       </label>
                     ))}
                   </div>
+                  {errors.negotiable && (
+                    <p className="text-xs text-red-500">
+                      {errors.negotiable.message}
+                    </p>
+                  )}
                 </div>
+              </div>
+
+              <div className="space-y-4">
+                <label className="text-xs font-black uppercase tracking-widest text-gray-500">
+                  Metode Pembayaran
+                </label>
+                <div className="flex gap-4">
+                  {["transfer", "cash"].map((type) => (
+                    <label
+                      key={type}
+                      className={`capitalize flex-1 flex items-center justify-center gap-2 px-5 py-4 rounded-2xl cursor-pointer transition-all border ${watch("payment_method") === type ? "bg-black text-white border-black" : "bg-gray-50 text-secondary border-transparent hover:bg-gray-100"}`}
+                    >
+                      <input
+                        type="radio"
+                        name="payment-method"
+                        className="sr-only"
+                        value={type}
+                        {...register("payment_method")}
+                      />
+                      <span className="text-sm font-bold">{type}</span>
+                    </label>
+                  ))}
+                </div>
+                {errors.payment_method && (
+                  <p className="text-xs text-red-500">
+                    {errors.payment_method.message}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-4 pt-4 border-t border-gray-100">
@@ -466,27 +554,30 @@ function SellPage() {
             </div>
           </section>
 
-          {/* Submission Footer */}
           <div className="">
+            <input
+              type="hidden"
+              {...register("seller_name", { value: user.full_name })}
+            />
             {/* <div className="fixed bottom-6 left-4/5 -translate-x-1/2 z-50 w-full max-w-4xl px-6"> */}
             <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-premium border border-gray-100 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div
-                  className={`w-2 h-2 rounded-full ${submitting ? "bg-blue-500 animate-pulse" : "bg-red-500"}`}
+                  className={`w-2 h-2 rounded-full ${isSubmitting ? "bg-blue-500 animate-pulse" : "bg-red-500"}`}
                 />
                 <span className="text-xs font-bold text-secondary">
-                  {submitting
+                  {isSubmitting
                     ? "Mengunggah & Menyimpan..."
                     : "Perubahan belum disimpan"}
                 </span>
               </div>
               <div className="flex items-center gap-4">
                 <button
-                  onClick={handleSubmit}
-                  disabled={submitting || photos.length === 0}
+                  type="submit"
+                  disabled={isSubmitting || photos.length === 0}
                   className="px-8 py-3 bg-black text-white rounded-xl font-bold text-sm shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100 flex items-center gap-2"
                 >
-                  {submitting ? (
+                  {isSubmitting ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
                     "Terbitkan"
@@ -495,7 +586,7 @@ function SellPage() {
               </div>
             </div>
           </div>
-        </main>
+        </form>
       </div>
     </div>
   );

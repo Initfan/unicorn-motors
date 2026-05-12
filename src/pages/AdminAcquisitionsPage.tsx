@@ -22,6 +22,7 @@ interface SellRequest {
   condition_notes: string;
   negotiable: boolean;
   status: string;
+  payment_method: string;
   created_at: string;
   car: {
     make: string;
@@ -305,8 +306,17 @@ function AdminAcquisitionsPage() {
                           Negosiasi
                         </p>
                         <p className="text-lg font-black">
-                          {selectedReq.negotiable ? "YES" : "NO"}
+                          {selectedReq.negotiable ? "Ya" : "Tidak"}
                         </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-secondary/40 mb-2">
+                        Permintaan Bayar
+                      </p>
+                      <div className="bg-gray-50 rounded-2xl p-5 text-xs text-secondary font-medium leading-relaxed">
+                        {selectedReq.payment_method}
                       </div>
                     </div>
 

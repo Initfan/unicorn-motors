@@ -8,8 +8,10 @@ import {
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../supabase";
 
+type UserProfile = User & { full_name: string };
+
 interface AuthContextType {
-  user: User | null;
+  user: UserProfile | null;
   role: string | null;
   loading: boolean;
   signOut: () => Promise<void>;
@@ -18,7 +20,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const [role, setRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,13 +30,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .getSession()
       .then(async ({ data: { session } }) => {
         const currentUser = session?.user ?? null;
-        setUser(currentUser);
         const { data } = await supabase
           .from("profiles")
-          .select("role")
+          .select("role, full_name")
           .eq("email", currentUser.email)
           .single();
-        console.log(data.role);
+        setUser({ ...currentUser, full_name: data.full_name });
         setRole(data.role ?? "buyer");
       })
       .finally(() => setLoading(false));
