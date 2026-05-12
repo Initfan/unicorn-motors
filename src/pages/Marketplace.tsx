@@ -22,7 +22,7 @@ function Marketplace() {
       let query = supabase
         .from("cars")
         .select("*")
-        .eq("is_auction", false)
+        .eq("is_sold", false)
         .order("created_at", { ascending: false });
 
       if (filters.bodyType) {

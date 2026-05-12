@@ -181,15 +181,17 @@ function AdminTransactionsPage() {
             <div
               className={`grid grid-cols-1 md:grid-cols-2 ${selectedTxn ? "lg:grid-cols-2" : "lg:grid-cols-4"} gap-6 mb-12 transition-all duration-500`}
             >
-              <StatCard
-                icon={CreditCard}
-                label="Total Penjualan"
-                value={`Rp. ${transactions
-                  .reduce((acc, txn) => acc + txn.car.price, 0)
-                  .toLocaleString()}`}
-                trend="+12.5%"
-                trendUp
-              />
+              <div className="col-span-2">
+                <StatCard
+                  icon={CreditCard}
+                  label="Total Penjualan"
+                  value={`Rp. ${transactions
+                    .reduce((acc, txn) => acc + txn.car.price, 0)
+                    .toLocaleString()}`}
+                  trend="+12.5%"
+                  trendUp
+                />
+              </div>
               <StatCard
                 icon={Gavel}
                 label="Lelang Aktif"
@@ -208,7 +210,7 @@ function AdminTransactionsPage() {
                     }
                     Urgent
                   />
-                  <StatCard icon={TrendingUp} label="Kinerja" value="98.2%" />
+                  {/* <StatCard icon={TrendingUp} label="Kinerja" value="98.2%" /> */}
                 </>
               )}
             </div>
@@ -459,9 +461,9 @@ function AdminTransactionsPage() {
                         <CheckCircle2 className="w-4 h-4" /> Tahap Aktif
                       </div>
                     )}
-                    <button className="w-full py-4 text-secondary font-black uppercase tracking-widest text-[10px] hover:text-black">
+                    {/* <button className="w-full py-4 text-secondary font-black uppercase tracking-widest text-[10px] hover:text-black">
                       Minta Dokumentasi
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </motion.aside>

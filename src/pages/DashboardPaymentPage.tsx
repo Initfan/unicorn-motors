@@ -114,13 +114,20 @@ function DashboardPaymentPage() {
         .from("booking-proofs")
         .getPublicUrl(path).data.publicUrl;
 
-      const { error: updateError } = await supabase
+      const { data, error: updateError } = await supabase
         .from("bookings")
         .update({
           status: "full_paid",
           full_payment_url: fullReceiptUrl,
         })
-        .eq("id", booking.id);
+        .eq("id", booking.id)
+        .select("car_id")
+        .single();
+
+      await supabase
+        .from("cars")
+        .update({ is_sold: true })
+        .eq("id", data.car_id);
 
       if (updateError) throw updateError;
 
