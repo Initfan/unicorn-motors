@@ -467,14 +467,14 @@ function AdminDeliveryPage() {
                       </div>
                     </div>
 
-                    <div className="flex gap-3 mt-8">
+                    {/* <div className="flex gap-3 mt-8">
                       <button className="flex-1 py-3 bg-white text-black rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors">
                         <Printer className="w-3 h-3" /> Print PDF
                       </button>
                       <button className="flex-1 py-3 bg-white/10 border border-white/20 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/20 transition-colors">
                         <Send className="w-3 h-3" /> Resend Link
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-white/5 rounded-full blur-3xl" />
                 </div>
@@ -515,8 +515,7 @@ function AdminDeliveryPage() {
                       onClick={() => handleDispatch(selectedOrder)}
                       className="w-full py-5 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
                     >
-                      <Truck className="w-4 h-4" /> Kirim Kendaraan & Buat Surat
-                      Jalan
+                      <Truck className="w-4 h-4" /> Kirim Kendaraan
                     </button>
                   )}
                   {selectedOrder.status === "delivering" && (

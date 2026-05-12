@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   ChevronRight,
   Edit2,
+  Trash2,
 } from "lucide-react";
 import type { Car } from "../types";
 import UpdateInventoryModal from "../components/UpdateStock";
@@ -16,6 +17,7 @@ function AdminInventoryPage() {
   const [loading, setLoading] = useState(true);
   const [editCar, setEditCar] = useState<Car>(null);
   const [open, setOpen] = useState(false);
+  const [updated, setUpdated] = useState<Car[]>([]);
 
   useEffect(() => {
     async function fetchInventory() {
@@ -33,7 +35,7 @@ function AdminInventoryPage() {
     }
 
     fetchInventory();
-  }, []);
+  }, [updated]);
 
   return (
     <div className="min-h-screen bg-[#F3F4F6] flex font-sans">
@@ -43,6 +45,7 @@ function AdminInventoryPage() {
         isOpen={open}
         onClose={() => setOpen(false)}
         car={editCar}
+        updated={(car) => setUpdated((p) => [...p, car])}
       />
 
       {/* Main Content Area */}
@@ -164,13 +167,13 @@ function AdminInventoryPage() {
                         <td className="px-8 py-6">
                           <div className="flex gap-2">
                             <span
-                              className={`px-2 py-1 bg-green-50 text-green-600 rounded-md text-[8px] font-black uppercase tracking-widest flex items-center gap-1 border border-green-100 ${car.certified_stnk ? "bg-red-50 text-red-600" : "bg-blue-50 text-blue-600"}`}
+                              className={`px-2 py-1 bg-green-50 text-green-600 rounded-md text-[8px] font-black uppercase tracking-widest flex items-center gap-1 border border-green-100 ${!car.certified_stnk ? "bg-red-50 text-red-600" : "bg-blue-50 text-blue-600"}`}
                             >
                               STNK{" "}
                               {car.certified_stnk ? "Valid" : "Tidak Valid"}
                             </span>
                             <span
-                              className={`px-2 py-1 rounded-md text-[8px] font-black uppercase tracking-widest flex items-center gap-1 border border-blue-100 ${car.certified_bpkb ? "bg-red-50 text-red-600" : "bg-blue-50 text-blue-600"}`}
+                              className={`px-2 py-1 rounded-md text-[8px] font-black uppercase tracking-widest flex items-center gap-1 border border-blue-100 ${!car.certified_bpkb ? "bg-red-50 text-red-600" : "bg-blue-50 text-blue-600"}`}
                             >
                               BPKB{" "}
                               {car.certified_bpkb
@@ -179,13 +182,21 @@ function AdminInventoryPage() {
                             </span>
                           </div>
                         </td>
-                        <td className="px-8 py-6 text-right">
+                        <td className="px-8 py-6 text-right flex ">
                           <div className="flex items-center justify-end gap-2">
                             <button
                               onClick={() => (setEditCar(car), setOpen(true))}
                               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                             >
                               <Edit2 className="w-4 h-4 text-secondary/60" />
+                            </button>
+                          </div>
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              onClick={() => null}
+                              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                            >
+                              <Trash2 className="w-4 h-4 text-secondary/60" />
                             </button>
                           </div>
                         </td>

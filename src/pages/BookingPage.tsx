@@ -449,7 +449,7 @@ function BookingPage() {
                     </div>
                     <div className="pt-4 border-t border-gray-200">
                       <button
-                        onClick={() => navigate(`/bookings}`)}
+                        onClick={() => navigate(`/bookings`)}
                         className="flex items-center justify-center gap-2 w-full py-4 bg-black text-white rounded-xl font-bold text-sm"
                       >
                         Lanjutkan ke Pembayaran{" "}
@@ -564,23 +564,6 @@ function BookingPage() {
           </div>
         </div>
       </main>
-
-      <footer className="py-12 border-t border-gray-100 mt-20">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 text-secondary text-sm">
-          <p>© 2026 Motora. All Rights Reserved.</p>
-          <div className="flex gap-8">
-            <a href="#" className="hover:text-black">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-black">
-              Terms of Service
-            </a>
-            <a href="#" className="hover:text-black">
-              Contact Support
-            </a>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

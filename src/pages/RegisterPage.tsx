@@ -46,17 +46,17 @@ function RegisterPage() {
             to="/"
             className="inline-flex items-center gap-2 text-sm font-bold mb-12 opacity-60 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-4 h-4" /> Back to Store
+            <ArrowLeft className="w-4 h-4" /> Kembali ke Toko
           </Link>
           <h1 className="text-6xl font-black tracking-tighter mb-8 leading-none">
-            The Journey <br />
+            Perjalanan <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">
-              Starts Here.
+              Dimulai di Sini.
             </span>
           </h1>
           <p className="text-lg text-white/60 leading-relaxed font-medium">
-            Join a world-class community of automotive enthusiasts. Sell, buy,
-            and track performance vehicles with ease.
+            Bergabunglah dengan komunitas penggemar otomotif kelas dunia. Jual,
+            beli, dan lacak kendaraan performa dengan mudah.
           </p>
         </div>
         <motion.div

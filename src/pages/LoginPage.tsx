@@ -39,17 +39,17 @@ function LoginPage() {
             to="/"
             className="inline-flex items-center gap-2 text-sm font-bold mb-12 opacity-60 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-4 h-4" /> Back to Store
+            <ArrowLeft className="w-4 h-4" /> kembali ke Toko
           </Link>
           <h1 className="text-6xl font-black tracking-tighter mb-8 leading-none">
-            Experience <br />
+            Pengalaman <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">
-              Excellence.
+              Keunggulan.
             </span>
           </h1>
           <p className="text-lg text-white/60 leading-relaxed font-medium">
-            Access your private inventory, manage your listings, and connect
-            with performance specialists.
+            Akses inventaris pribadi Anda, kelola daftar Anda, dan sambungkan
+            dengan spesialis kinerja.
           </p>
         </div>
         {/* Animated background element */}
@@ -67,9 +67,11 @@ function LoginPage() {
       <div className="flex items-center justify-center p-8 bg-white">
         <div className="w-full max-w-md space-y-12">
           <div className="space-y-4">
-            <h2 className="text-4xl font-black tracking-tight">Welcome Back</h2>
+            <h2 className="text-4xl font-black tracking-tight">
+              Selamat Datang Kembali
+            </h2>
             <p className="text-secondary font-medium">
-              Please enter your details to access your account.
+              Silakan masukkan detail Anda untuk mengakses akun Anda.
             </p>
           </div>
 

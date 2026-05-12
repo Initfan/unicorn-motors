@@ -242,9 +242,12 @@ function DashboardBookingsPage() {
                         </div>
                         <div className="flex items-center gap-4">
                           {booking.status === "completed" ? (
-                            <button className="px-8 py-4 bg-white border-2 border-gray-100 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center gap-2 hover:bg-gray-50 transition-all">
+                            <Link
+                              to={`/invoice/${booking.id}`}
+                              className="px-8 py-4 bg-white border-2 border-gray-100 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center gap-2 hover:bg-gray-50 transition-all"
+                            >
                               <Download className="w-4 h-4" /> Unduh Invoice
-                            </button>
+                            </Link>
                           ) : (
                             <>
                               <button className="text-[11px] font-black uppercase tracking-widest text-secondary hover:text-black transition-colors px-4">

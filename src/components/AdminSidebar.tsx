@@ -21,7 +21,7 @@ const navItems = [
 function AdminSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
+  const { user, signOut, role } = useAuth();
 
   return (
     <aside className="w-72 bg-white border-r border-gray-100 flex flex-col fixed inset-y-0 shadow-sm z-50">
@@ -44,7 +44,7 @@ function AdminSidebar() {
         <nav className="space-y-2">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
-            return (
+            return role == "admin" ? (
               <button
                 key={item.label}
                 onClick={() => {
@@ -66,8 +66,31 @@ function AdminSidebar() {
                   </span>
                 )}
               </button>
-            );
+            ) : null;
           })}
+
+          {role == "delivery" && (
+            <button
+              onClick={() => {
+                if (navItems[2].path !== "#") navigate(navItems[2].path);
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-xs font-bold uppercase tracking-widest transition-all ${
+                location.pathname === navItems[2].path
+                  ? "bg-black text-white shadow-lg"
+                  : navItems[2].path === "#"
+                    ? "text-gray-300 cursor-not-allowed"
+                    : "text-secondary hover:bg-gray-50"
+              }`}
+            >
+              <Truck className="w-4 h-4" />
+              {navItems[2].label}
+              {navItems[2].path === "#" && (
+                <span className="ml-auto text-[8px] bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded-full">
+                  Soon
+                </span>
+              )}
+            </button>
+          )}
         </nav>
       </div>
 

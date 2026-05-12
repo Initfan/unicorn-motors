@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
                 Bursa Mobil
               </Link>
 
-              {role !== "admin" && (
+              {role !== "admin" && role !== "delivery" && (
                 <>
                   <Link
                     to="/sell"
@@ -85,6 +85,19 @@ const Navbar: React.FC = () => {
                   } py-1 transition-colors`}
                 >
                   Admin
+                </Link>
+              )}
+
+              {role === "delivery" && (
+                <Link
+                  to="/admin/delivery"
+                  className={`${
+                    location.pathname.startsWith("/admin")
+                      ? "border-b-2 border-primary text-black"
+                      : "text-secondary hover:text-primary"
+                  } py-1 transition-colors`}
+                >
+                  Pengiriman
                 </Link>
               )}
             </div>

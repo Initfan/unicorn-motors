@@ -15,20 +15,21 @@ import AdminAcquisitionsPage from "./pages/AdminAcquisitionsPage";
 import AdminRBACPage from "./pages/AdminRBACPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SellRequestsPage from "./pages/SellRequestsPage";
+import Invoice from "./components/Invoice";
 
 function App() {
   return (
     <>
       <ScrollToTop />
       <Routes>
-        {/* Public Routes */}
         <Route path="/" element={<Marketplace />} />
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/car/:id" element={<CarDetailPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        {/* Buyer Routes */}
+        <Route path="/invoice/:id" element={<Invoice />} />
+
         <Route
           path="/booking/:id"
           element={
@@ -54,7 +55,6 @@ function App() {
           }
         />
 
-        {/* Seller Routes */}
         <Route
           path="/sell"
           element={
@@ -73,7 +73,6 @@ function App() {
           }
         />
 
-        {/* Admin Console - Restricted to Admin & Specific Roles */}
         <Route
           path="/admin/transactions"
           element={

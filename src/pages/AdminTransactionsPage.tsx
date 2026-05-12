@@ -84,6 +84,8 @@ function AdminTransactionsPage() {
     let nextStatus = "verified";
     if (selectedTxn.status === "dp_paid") nextStatus = "verified_dp";
     if (selectedTxn.status === "verified_dp") nextStatus = "processing_docs";
+    if (selectedTxn.status === "ready_for_pickup")
+      nextStatus = "request_delivery";
 
     const { error } = await supabase
       .from("bookings")
@@ -305,6 +307,7 @@ function AdminTransactionsPage() {
                                   "verified",
                                   "verified_dp",
                                   "completed",
+                                  "request_delivery",
                                 ].includes(txn.status)
                                   ? "Lihat"
                                   : "Verifikasi"}
@@ -334,9 +337,12 @@ function AdminTransactionsPage() {
                   <div className="flex items-center justify-between mb-8">
                     <h3 className="flex items-center gap-2 text-lg font-black tracking-tight">
                       <CheckCircle2 className="w-5 h-5" />{" "}
-                      {["verified", "verified_dp", "completed"].includes(
-                        selectedTxn.status,
-                      )
+                      {[
+                        "verified",
+                        "verified_dp",
+                        "completed",
+                        "request_delivery",
+                      ].includes(selectedTxn.status)
                         ? "Verifikasi Selesai"
                         : "Verifikasi Diperlukan"}
                     </h3>
@@ -351,9 +357,13 @@ function AdminTransactionsPage() {
                   <p className="text-xs text-secondary leading-relaxed font-medium mb-10">
                     {selectedTxn.status === "dp_paid"
                       ? "Prioritas Tinggi: Verifikasi DP dan Identitas diperlukan untuk memulai pengiriman kendaraan."
-                      : selectedTxn.status === "pending"
-                        ? "Verifikasi Biaya Booking: Klarifikasi komitmen awal untuk pemesanan kendaraan."
-                        : "Transaksi berhasil diselesaikan dan dipindahkan ke pemenuhan."}
+                      : selectedTxn.status === "ready_for_pickup"
+                        ? "Kendaraan siap untuk dikirim"
+                        : selectedTxn.status === "request_delivery"
+                          ? "Kendaraan dalam pengiriman"
+                          : selectedTxn.status === "pending"
+                            ? "Verifikasi Biaya Booking: Klarifikasi komitmen awal untuk pemesanan kendaraan."
+                            : "Transaksi berhasil diselesaikan dan dipindahkan ke pemenuhan."}
                   </p>
 
                   {/* Dynamic Preview Section */}
@@ -426,18 +436,23 @@ function AdminTransactionsPage() {
                   )}
 
                   <div className="space-y-4">
-                    {["pending", "dp_paid", "verified_dp"].includes(
-                      selectedTxn.status,
-                    ) ? (
+                    {[
+                      "pending",
+                      "dp_paid",
+                      "verified_dp",
+                      "ready_for_pickup",
+                    ].includes(selectedTxn.status) ? (
                       <button
                         onClick={handleApprove}
                         className="w-full py-5 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:scale-[1.02] active:scale-95 transition-all"
                       >
                         {selectedTxn.status === "verified_dp"
                           ? "Proses STNK & BPKB"
-                          : selectedTxn.status === "dp_paid"
-                            ? "Verifikasi Identitas & DP"
-                            : "Verifikasi Biaya Booking"}
+                          : selectedTxn.status === "ready_for_pickup"
+                            ? "Buat surat jalan"
+                            : selectedTxn.status === "dp_paid"
+                              ? "Verifikasi Identitas & DP"
+                              : "Verifikasi Biaya Booking"}
                       </button>
                     ) : (
                       <div className="w-full py-5 bg-green-50 text-green-700 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 border border-green-100">

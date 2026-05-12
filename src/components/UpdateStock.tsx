@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  updated: (car: Car) => void;
   car: Car | null;
 };
 
@@ -14,7 +15,7 @@ export default function UpdateInventoryModal({
   isOpen,
   onClose,
   car,
-  // onSave,
+  updated,
 }: Props) {
   if (!isOpen || !car) return null;
 
@@ -26,7 +27,7 @@ export default function UpdateInventoryModal({
   } = useForm();
 
   const onSubmit = async (inputData: Car) => {
-    const { data: v } = await supabase
+    const { error } = await supabase
       .from("cars")
       .update({
         ...inputData,
@@ -35,7 +36,9 @@ export default function UpdateInventoryModal({
       })
       .eq("id", car.id)
       .select("*");
-    console.log(v);
+    if (error) return;
+
+    updated(inputData);
     onClose();
   };
 

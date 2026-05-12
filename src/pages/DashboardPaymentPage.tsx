@@ -16,6 +16,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 interface Booking {
   id: string;
@@ -38,6 +39,7 @@ function DashboardPaymentPage() {
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [fullReceiptFile, setFullReceiptFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [updateData, setUpdate] = useState(false);
 
   const handleDPPayment = async () => {
     if (!ktpFile || !receiptFile || !booking) return;
@@ -82,10 +84,14 @@ function DashboardPaymentPage() {
 
       if (updateError) throw updateError;
 
-      alert("DP Payment & KTP Uploaded Successfully! Awaiting verification.");
+      setUpdate((p) => p!);
+
+      toast.success(
+        "Pembayaran DP & KTP Berhasil Diunggah! Menunggu verifikasi.",
+      );
     } catch (err: any) {
       console.error(err);
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsUploading(false);
     }
@@ -118,10 +124,13 @@ function DashboardPaymentPage() {
 
       if (updateError) throw updateError;
 
-      alert("Full Payment Receipt Uploaded! Preparing for vehicle delivery.");
+      setUpdate((p) => p!);
+      toast.success(
+        "Bukti Pembayaran Lengkap Telah Diunggah! Persiapan pengiriman kendaraan.",
+      );
     } catch (err: any) {
       console.error(err);
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setIsUploading(false);
     }
@@ -144,12 +153,13 @@ function DashboardPaymentPage() {
         .eq("id", booking.id);
 
       if (error) throw error;
-      alert(
-        `Handover method selected: ${method === "pickup" ? "Self Collection" : "Home Delivery"}`,
+      setUpdate((p) => p!);
+      toast.success(
+        `Metode penyerahan yang dipilih: ${method === "pickup" ? "Ambil Sendiri" : "Pengiriman ke Rumah"}`,
       );
     } catch (err: any) {
       console.error(err);
-      alert("Error selecting handover method: " + err.message);
+      toast.error("Error selecting handover method: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -186,23 +196,7 @@ function DashboardPaymentPage() {
           .eq("id", bookingData.car_id)
           .maybeSingle();
 
-        if (carData) {
-          setCar({
-            id: carData.id,
-            make: carData.make,
-            model: carData.model,
-            year: carData.year,
-            price: carData.price,
-            mileage: carData.mileage,
-            fuelType: carData.fuel_type,
-            bodyType: carData.body_type,
-            imageUrl: carData.image_url,
-            isNewArrival: carData.is_new_arrival,
-            isCertified: carData.is_certified,
-            isEditorsChoice: carData.is_editors_choice,
-            description: carData.description,
-          });
-        }
+        if (carData) setCar(carData);
 
         // 3. Setup Real-time subscription
         channel = supabase
@@ -234,7 +228,7 @@ function DashboardPaymentPage() {
         supabase.removeChannel(channel);
       }
     };
-  }, [user, id]);
+  }, [user, id, updateData]);
 
   if (loading) {
     return (
@@ -989,7 +983,7 @@ function DashboardPaymentPage() {
             <div className="bg-white rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm">
               <div className="aspect-video relative overflow-hidden">
                 <img
-                  src={car.imageUrl}
+                  src={car.image_url}
                   alt={car.model}
                   className="w-full h-full object-cover"
                 />
